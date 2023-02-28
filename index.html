@@ -35,7 +35,7 @@
 
   <section class="hidden" id="hamburger-open">
     <ul>
-      <li data-view="home"><a>Home/Search</a></li>
+      <li data-view-change="home"><a>Home/Search</a></li>
     </ul>
   </section>
 
@@ -55,8 +55,8 @@
           <h3 class="width-80">Get Started</h3>
           <div class="width-80">
             <label for="search-main">Search for a card by Pokemon.</label>
-            <input type="text" id="search-main" placeholder="Charizard">
-            <button class="search">Search</button>
+            <input type="text" class="search-main" placeholder="Charizard">
+            <button class="search" id="search-home">Search</button>
           </div>
         </div>
         <div id="card-back">
@@ -69,8 +69,8 @@
   <section class="container hidden" data-view="search-results">
     <div class="column-full">
       <label for="search-main">Search for a card by Pokemon.</label>
-      <input type="text" id="search-page" placeholder="Charizard">
-      <button class="search">Search</button>
+      <input type="text" class="search-main" placeholder="Charizard">
+      <button class="search" id="search-again">Search</button>
     </div>
   </section>
 

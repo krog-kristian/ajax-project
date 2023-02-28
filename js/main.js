@@ -23,8 +23,32 @@ var $hamburger = document.querySelector('#hamburger-open');
 $hamburger.addEventListener('click', function () {
   if (event.target.closest('li')) {
     var $targetLi = event.target.closest('li');
-    var newView = $targetLi.getAttribute('data-view');
+    var newView = $targetLi.getAttribute('data-view-change');
     viewSwap(newView);
     $hamburger.classList.add('hidden');
+  }
+});
+
+var $searchButton = document.querySelector('#search-home');
+var $searchAgain = document.querySelector('#search-again');
+
+function search(input) {
+  // console.log('search input', input);
+}
+
+$searchButton.addEventListener('click', function () {
+  var $searchInput = $searchButton.previousElementSibling;
+  if ($searchInput.value !== '') {
+    search($searchInput.value);
+  } else {
+    search($searchInput.getAttribute('placeholder'));
+  }
+  viewSwap('search-results');
+});
+
+$searchAgain.addEventListener('click', function () {
+  var $searchInput = $searchButton.previousElementSibling;
+  if ($searchInput.value !== '') {
+    search($searchInput.value);
   }
 });
