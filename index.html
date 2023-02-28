@@ -32,7 +32,14 @@
       </div>
     </div>
   </header>
-  <main class="container">
+
+  <section class="hidden" id="hamburger-open">
+    <ul>
+      <li><a>Home/Search</a></li>
+    </ul>
+  </section>
+
+  <main class="container" data-view="home">
     <div class="row">
       <div class="column-half order-2">
         <h2>Welcome to TCG Tracker for Pokemon!</h2>
@@ -58,6 +65,15 @@
       </div>
     </div>
   </main>
+
+  <section class="container hidden" data-view="search-results">
+    <div class="column-full">
+      <label for="search-main">Search for a card by Pokemon.</label>
+      <input type="text" id="search-page" placeholder="Charizard">
+      <button class="search">Search</button>
+    </div>
+  </section>
+
   <footer class="container"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
       Those Icons -
       Flaticon</a></footer>

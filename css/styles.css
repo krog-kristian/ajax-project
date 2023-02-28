@@ -2,8 +2,10 @@ header {
   background-color: #031c67;
 }
 
-main {
+main,
+section {
   padding-top: 4rem !important;
+  min-height: 100vh;
 }
 
 /* fonts and text */
@@ -60,6 +62,7 @@ p {
   display: flex;
   justify-content: space-between;
   padding: 0 1.5rem;
+  z-index: 2;
 }
 
 #nav-desktop {
@@ -91,44 +94,39 @@ label {
 }
 
 input {
-  width: 70%;
+  width: 13rem;
   padding: 0.2rem;
   font-size: 1.2rem;
   border-radius: 0.25rem;
 }
 
-@media screen and (min-width: 768px) {
-  #nav-mobile {
-    display: none;
-  }
-
-  #nav-desktop {
-    display: block;
-    position: fixed;
-    top: 0;
-    background-color: #031c67;
-    width: 100%;
-  }
-
-  main {
-    padding-top: 8rem !important;
-  }
-
-  .order-1 {
-    order: 1;
-  }
-
-  .order-2 {
-    order: 2;
-  }
-
-  h3 {
-    text-align: left;
-  }
-}
-
 .container {
   background-color: #f6f6f6;
+}
+
+#hamburger-open {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #d9d9d9;
+  z-index: 1;
+}
+
+#hamburger-open li {
+  border-bottom: 0.4rem solid #031c67;
+  padding: 1rem;
+  list-style-position: inside;
+}
+
+li > a {
+  font-size: 1.5rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 /* Icons and Images   */
@@ -172,9 +170,50 @@ input {
   border-radius: 0.25rem;
   font-size: 1.2rem;
   padding: 0.2rem 0.4rem;
-  margin: 0 0.25rem;
+  margin: 0 0.2rem;
 }
 
 .search:hover {
   cursor: pointer;
+}
+
+/* MEDIA RULES */
+
+@media screen and (min-width: 768px) {
+  #nav-mobile {
+    display: none;
+  }
+
+  #nav-desktop {
+    display: block;
+    position: fixed;
+    top: 0;
+    background-color: #031c67;
+    width: 100%;
+  }
+
+  main,
+  section {
+    padding-top: 8rem !important;
+  }
+
+  .order-1 {
+    order: 1;
+  }
+
+  .order-2 {
+    order: 2;
+  }
+
+  h3 {
+    text-align: left;
+  }
+
+  input {
+    width: 15rem;
+  }
+
+  .search {
+    margin: 0 1rem;
+  }
 }
