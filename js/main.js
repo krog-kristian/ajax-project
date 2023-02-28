@@ -33,7 +33,14 @@ var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
 
 function search(input) {
-  // console.log('search input', input);
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=name:' + input + '*');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    // console.log('status', xhr.status);
+    // console.log('response:', xhr.response);
+  });
+  xhr.send();
 }
 
 $searchButton.addEventListener('click', function () {
@@ -47,7 +54,7 @@ $searchButton.addEventListener('click', function () {
 });
 
 $searchAgain.addEventListener('click', function () {
-  var $searchInput = $searchButton.previousElementSibling;
+  var $searchInput = $searchAgain.previousElementSibling;
   if ($searchInput.value !== '') {
     search($searchInput.value);
   }
