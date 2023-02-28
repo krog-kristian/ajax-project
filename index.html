@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Teko:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -38,20 +43,22 @@
           your missing from a set!
         </p>
       </div>
-      <div class="column-half order-1">
-        <h3>Get Started</h3>
-        <div>
-          <label for="search-main">Search for a card by Pokemon.</label>
-          <input type="text" id="search-main">
-          <button>Search</button>
-          <div id="card-back">
-            <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+      <div class="column-half order-1 center-justify">
+        <div class="margin-side-auto">
+          <h3 class="width-80">Get Started</h3>
+          <div class="width-80">
+            <label for="search-main">Search for a card by Pokemon.</label>
+            <input type="text" id="search-main" placeholder="Charizard">
+            <button class="search">Search</button>
           </div>
+        </div>
+        <div id="card-back">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
       </div>
     </div>
   </main>
-  <footer class="row"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
+  <footer class="container"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
       Those Icons -
       Flaticon</a></footer>
   <script src="js/data.js"></script>

@@ -3,8 +3,54 @@ header {
 }
 
 main {
-  padding-top: 8rem !important;
+  padding-top: 4rem !important;
 }
+
+/* fonts and text */
+
+h1 {
+  color: #ffd705;
+  font-family: Teko, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  margin: auto 0;
+}
+
+body,
+button {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+footer {
+  background-color: #f6f6f6;
+}
+
+footer > a {
+  font-size: 0.5rem;
+  margin-top: 5rem;
+}
+
+h2,
+h3 {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin: 0 2rem;
+}
+
+h3 {
+  margin: 0;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
+
+/* secondary layouts */
 
 #nav-mobile {
   position: fixed;
@@ -27,10 +73,28 @@ main {
   justify-content: space-between;
 }
 
-/* fonts and text */
+.margin-side-auto {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
 
-h1 {
-  color: #ffd705;
+.width-80 {
+  width: 90%;
+}
+
+label {
+  display: block;
+  margin: 0.75rem 0;
+}
+
+input {
+  width: 70%;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -46,12 +110,20 @@ h1 {
     width: 100%;
   }
 
+  main {
+    padding-top: 8rem !important;
+  }
+
   .order-1 {
     order: 1;
   }
 
   .order-2 {
     order: 2;
+  }
+
+  h3 {
+    text-align: left;
   }
 }
 
@@ -62,30 +134,47 @@ h1 {
 /* Icons and Images   */
 
 #hamburger {
-  border: 0.15rem solid black;
+  border: 0.1rem solid black;
   display: flex;
   justify-content: center;
   align-content: center;
   padding: 0.5rem;
   background-color: #031c67;
-  margin: 1rem;
   border-radius: 0.75rem;
+  margin: auto 0;
 }
 
 #hamburger > i {
   color: #dd0707;
-  margin: auto 1rem;
+  padding: 0.75rem;
 }
 
 #nav-desktop img {
-  width: 4rem;
+  width: 3rem;
+  margin: 0.5rem 0;
 }
 
 #card-back {
   width: 60%;
-  margin: auto;
+  margin: 2rem auto;
 }
 
 #card-back > img {
   width: 100%;
+}
+
+/* Buttons  */
+
+.search {
+  background-color: #f6f6f6;
+  color: #007bff;
+  border: 0.1rem solid #007bff;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.4rem;
+  margin: 0 0.25rem;
+}
+
+.search:hover {
+  cursor: pointer;
 }
