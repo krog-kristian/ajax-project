@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
   <link rel="icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -13,18 +16,20 @@
   <header>
     <div id="nav-mobile">
       <h1>TCG Tracker</h1>
-      <div id="hamburger"></div>
+      <button id="hamburger"><i class="fa-solid fa-bars fa-2xl"></i></button>
     </div>
     <div id="nav-desktop">
-      <h1>TCG Tracker</h1>
-      <div>
-        <img src="images/pokeball.png" alt="A pokeball.">
+      <div class="set-width">
+        <h1>TCG Tracker</h1>
+        <div>
+          <img src="images/pokeball.png" alt="A pokeball.">
+        </div>
       </div>
     </div>
   </header>
   <main class="container">
     <div class="row">
-      <div class="column-half">
+      <div class="column-half order-2">
         <h2>Welcome to TCG Tracker for Pokemon!</h2>
         <p>TCG Tracker allows you to search for all your favourite Pokemon cards.
           It allows you to add them to a collection to keep track of cards you own. You can also view and sort
@@ -33,13 +38,13 @@
           your missing from a set!
         </p>
       </div>
-      <div class="column-half">
+      <div class="column-half order-1">
         <h3>Get Started</h3>
         <div>
           <label for="search-main">Search for a card by Pokemon.</label>
           <input type="text" id="search-main">
           <button>Search</button>
-          <div>
+          <div id="card-back">
             <img src="images/card-back.jpg" alt="The back of a pokemon card.">
           </div>
         </div>
