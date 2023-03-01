@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
+  data.view = 'home';
+});
+
 function viewSwap(newView) {
   if (data.view !== newView) {
     var $newView = document.querySelector('[data-view="' + newView + '"]');
@@ -55,7 +59,7 @@ function search(input) {
       var $cardRow = document.createElement('div');
       $cardRow.classList.add('row');
       for (var i = 0; i < xhr.response.data.length; i++) {
-        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small, i));
+        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
       }
       $searchPage.appendChild($cardRow);
     }
@@ -90,13 +94,26 @@ $searchAgain.addEventListener('click', function () {
   }
 });
 
-function renderCard(imageUrl, location) {
+function renderCard(imageUrl, cardID) {
   var $cardWrapper = document.createElement('div');
   $cardWrapper.classList.add('column-quarter');
   $cardWrapper.classList.add('card-wrapper');
-  $cardWrapper.setAttribute('data-location', location);
+  $cardWrapper.setAttribute('data-location', cardID);
   var $cardImage = document.createElement('img');
   $cardImage.setAttribute('src', imageUrl);
   $cardWrapper.appendChild($cardImage);
+  if (data.view === 'search-results') {
+    var $addButton = document.createElement('button');
+    $addButton.classList.add('mobile-collect');
+    var $addIcon = document.createElement('i');
+    $addIcon.classList.add('fa-solid');
+    $addIcon.classList.add('fa-circle-plus');
+    $addButton.appendChild($addIcon);
+    $cardWrapper.appendChild($addButton);
+    var $collectButton = document.createElement('button');
+    $collectButton.classList.add('desktop-collect');
+    $collectButton.textContent = 'Collect';
+    $cardWrapper.appendChild($collectButton);
+  }
   return $cardWrapper;
 }
