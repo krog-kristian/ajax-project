@@ -31,14 +31,21 @@ $hamburger.addEventListener('click', function () {
 
 var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
+var $searchPage = document.querySelector('[data-view="search-results"]');
 
 function search(input) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=name:' + input + '*');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    // console.log('status', xhr.status);
-    // console.log('response:', xhr.response);
+    if (xhr.status >= 200 && xhr.status < 300) {
+      var $cardRow = document.createElement('div');
+      $cardRow.classList.add('row');
+      for (var i = 0; i < xhr.response.data.length; i++) {
+        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small));
+      }
+      $searchPage.appendChild($cardRow);
+    }
   });
   xhr.send();
 }
@@ -58,4 +65,18 @@ $searchAgain.addEventListener('click', function () {
   if ($searchInput.value !== '') {
     search($searchInput.value);
   }
+  if ($searchPage.childElementCount > 1) {
+    var firstChild = $searchPage.firstElementChild;
+    firstChild.nextElementSibling.remove();
+  }
 });
+
+function renderCard(imageUrl) {
+  var $cardWrapper = document.createElement('div');
+  $cardWrapper.classList.add('column-quarter');
+  $cardWrapper.classList.add('card-wrapper');
+  var $cardImage = document.createElement('img');
+  $cardImage.setAttribute('src', imageUrl);
+  $cardWrapper.appendChild($cardImage);
+  return $cardWrapper;
+}
