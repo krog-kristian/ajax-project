@@ -47,7 +47,7 @@ $navLinks.addEventListener('click', function () {
 var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
 var $searchPage = document.querySelector('[data-view="search-results"]');
-// var tempData = {};
+var tempData = {};
 
 function search(input) {
   var xhr = new XMLHttpRequest();
@@ -55,7 +55,7 @@ function search(input) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     if (xhr.status >= 200 && xhr.status < 300) {
-      // tempData = xhr.response;
+      tempData = xhr.response;
       var $cardRow = document.createElement('div');
       $cardRow.classList.add('row');
       for (var i = 0; i < xhr.response.data.length; i++) {
@@ -65,6 +65,30 @@ function search(input) {
     }
   });
   xhr.send();
+}
+
+function renderCard(imageUrl, cardID) {
+  var $cardWrapper = document.createElement('div');
+  $cardWrapper.classList.add('column-quarter');
+  $cardWrapper.classList.add('card-wrapper');
+  $cardWrapper.setAttribute('data-location', cardID);
+  var $cardImage = document.createElement('img');
+  $cardImage.setAttribute('src', imageUrl);
+  $cardWrapper.appendChild($cardImage);
+  if (data.view === 'search-results') {
+    var $addButton = document.createElement('button');
+    $addButton.classList.add('mobile-collect');
+    var $addIcon = document.createElement('i');
+    $addIcon.classList.add('fa-solid');
+    $addIcon.classList.add('fa-circle-plus');
+    $addButton.appendChild($addIcon);
+    $cardWrapper.appendChild($addButton);
+    var $collectButton = document.createElement('button');
+    $collectButton.classList.add('desktop-collect');
+    $collectButton.textContent = 'Collect';
+    $cardWrapper.appendChild($collectButton);
+  }
+  return $cardWrapper;
 }
 
 $searchButton.addEventListener('click', function () {
@@ -94,26 +118,23 @@ $searchAgain.addEventListener('click', function () {
   }
 });
 
-function renderCard(imageUrl, cardID) {
-  var $cardWrapper = document.createElement('div');
-  $cardWrapper.classList.add('column-quarter');
-  $cardWrapper.classList.add('card-wrapper');
-  $cardWrapper.setAttribute('data-location', cardID);
-  var $cardImage = document.createElement('img');
-  $cardImage.setAttribute('src', imageUrl);
-  $cardWrapper.appendChild($cardImage);
-  if (data.view === 'search-results') {
-    var $addButton = document.createElement('button');
-    $addButton.classList.add('mobile-collect');
-    var $addIcon = document.createElement('i');
-    $addIcon.classList.add('fa-solid');
-    $addIcon.classList.add('fa-circle-plus');
-    $addButton.appendChild($addIcon);
-    $cardWrapper.appendChild($addButton);
-    var $collectButton = document.createElement('button');
-    $collectButton.classList.add('desktop-collect');
-    $collectButton.textContent = 'Collect';
-    $cardWrapper.appendChild($collectButton);
+$searchPage.addEventListener('click', function () {
+  if (event.target.matches('i') || event.target.matches('.desktop-collect')) {
+    var $collectedCard = event.target.closest('.card-wrapper');
+    var cardID = $collectedCard.getAttribute('data-location');
+    for (var i = 0; i < tempData.data.length; i++) {
+      if (cardID === tempData.data[i].id) {
+        var newCard = {};
+        newCard.id = tempData.data[i].id;
+        newCard.name = tempData.data[i].name;
+        newCard.supertype = tempData.data[i].supertype;
+        newCard.hp = tempData.data[i].hp;
+        newCard.types = tempData.data[i].types;
+        newCard.images = tempData.data[i].images;
+        newCard.set = tempData.data[i].set.id;
+        newCard.setName = tempData.data[i].set.name;
+        newCard.setSeries = tempData.data[i].set.series;
+      }
+    }
   }
-  return $cardWrapper;
-}
+});
