@@ -10,26 +10,24 @@ var tempData = {};
 document.addEventListener('DOMContentLoaded', function () {
   if (data.collection.length > 1) {
     viewSwap('collection');
-    var $collection = document.querySelector('#collection');
-    for (var i = 0; i < data.collection.length; i++) {
-      $collection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
-    }
   } else {
     data.view = 'home';
   }
 });
 
 function viewSwap(newView) {
+  var $oldView = document.querySelector('[data-view="' + data.view + '"]');
   if (data.view !== newView) {
     var $newView = document.querySelector('[data-view="' + newView + '"]');
-    var $oldView = document.querySelector('[data-view="' + data.view + '"]');
     $newView.classList.remove('hidden');
     $oldView.classList.add('hidden');
     data.view = newView;
+  } else if ($oldView.classList.contains('hidden')) {
+    $oldView.classList.remove('hidden');
   }
   if (data.view === 'collection') {
     var $collection = document.querySelector('#collection');
-    if (data.collection.length > $collection.childElementCount) {
+    if (data.collection.length !== $collection.childElementCount) {
       $collection.remove();
       var $newCollection = document.createElement('div');
       $newCollection.classList.add('row');
@@ -132,6 +130,7 @@ $searchButton.addEventListener('click', function () {
     var firstChild = $searchPage.firstElementChild;
     firstChild.nextElementSibling.remove();
   }
+  $searchInput.value = '';
 });
 
 $searchAgain.addEventListener('click', function () {
@@ -145,6 +144,7 @@ $searchAgain.addEventListener('click', function () {
     var firstChild = $searchPage.firstElementChild;
     firstChild.nextElementSibling.remove();
   }
+  $searchInput.value = '';
 });
 
 $searchPage.addEventListener('click', function () {
