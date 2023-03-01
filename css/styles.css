@@ -168,6 +168,12 @@ ul {
   margin: 0.5rem auto 0;
 }
 
+.fa-square-check {
+  color: #1bb55c;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
 .mobile-collect > i {
   color: #031c67;
   font-size: 1.5rem;

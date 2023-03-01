@@ -76,6 +76,15 @@ function renderCard(imageUrl, cardID) {
   $cardImage.setAttribute('src', imageUrl);
   $cardWrapper.appendChild($cardImage);
   if (data.view === 'search-results') {
+    for (var i = 0; i < data.collection.length; i++) {
+      if (data.collection[i].id === cardID) {
+        var $checkMark = document.createElement('i');
+        $checkMark.classList.add('fa-solid');
+        $checkMark.classList.add('fa-square-check');
+        $cardWrapper.appendChild($checkMark);
+        return $cardWrapper;
+      }
+    }
     var $addButton = document.createElement('button');
     $addButton.classList.add('mobile-collect');
     var $addIcon = document.createElement('i');
@@ -87,8 +96,8 @@ function renderCard(imageUrl, cardID) {
     $collectButton.classList.add('desktop-collect');
     $collectButton.textContent = 'Collect';
     $cardWrapper.appendChild($collectButton);
+    return $cardWrapper;
   }
-  return $cardWrapper;
 }
 
 $searchButton.addEventListener('click', function () {
@@ -134,6 +143,7 @@ $searchPage.addEventListener('click', function () {
         newCard.set = tempData.data[i].set.id;
         newCard.setName = tempData.data[i].set.name;
         newCard.setSeries = tempData.data[i].set.series;
+        data.collection.push(newCard);
       }
     }
   }
