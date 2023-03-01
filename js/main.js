@@ -42,7 +42,7 @@ function search(input) {
       var $cardRow = document.createElement('div');
       $cardRow.classList.add('row');
       for (var i = 0; i < xhr.response.data.length; i++) {
-        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small));
+        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small, i));
       }
       $searchPage.appendChild($cardRow);
     }
@@ -71,10 +71,11 @@ $searchAgain.addEventListener('click', function () {
   }
 });
 
-function renderCard(imageUrl) {
+function renderCard(imageUrl, location) {
   var $cardWrapper = document.createElement('div');
   $cardWrapper.classList.add('column-quarter');
   $cardWrapper.classList.add('card-wrapper');
+  $cardWrapper.setAttribute('data-location', location);
   var $cardImage = document.createElement('img');
   $cardImage.setAttribute('src', imageUrl);
   $cardWrapper.appendChild($cardImage);
