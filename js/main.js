@@ -8,7 +8,15 @@ var $searchPage = document.querySelector('[data-view="search-results"]');
 var tempData = {};
 
 document.addEventListener('DOMContentLoaded', function () {
-  data.view = 'home';
+  if (data.collection.length > 1) {
+    viewSwap('collection');
+    var $collection = document.querySelector('#collection');
+    for (var i = 0; i < data.collection.length; i++) {
+      $collection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    }
+  } else {
+    data.view = 'home';
+  }
 });
 
 function viewSwap(newView) {
