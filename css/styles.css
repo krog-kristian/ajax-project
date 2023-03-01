@@ -147,6 +147,16 @@ ul {
   padding: 0.75rem;
 }
 
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.card-wrapper > img {
+  width: 80%;
+}
+
 #nav-desktop img {
   width: 3rem;
   margin: 0.5rem 0;
