@@ -43,6 +43,7 @@ $navLinks.addEventListener('click', function () {
 var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
 var $searchPage = document.querySelector('[data-view="search-results"]');
+// var tempData = {};
 
 function search(input) {
   var xhr = new XMLHttpRequest();
@@ -50,6 +51,7 @@ function search(input) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     if (xhr.status >= 200 && xhr.status < 300) {
+      // tempData = xhr.response;
       var $cardRow = document.createElement('div');
       $cardRow.classList.add('row');
       for (var i = 0; i < xhr.response.data.length; i++) {
