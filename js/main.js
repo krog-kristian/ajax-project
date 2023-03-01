@@ -1,3 +1,12 @@
+var $collectionPage = document.querySelector('[data-view="collection"]');
+var $hamburgerButton = document.querySelector('#hamburger');
+var $hamburger = document.querySelector('#hamburger-open');
+var $navLinks = document.querySelector('#nav-links');
+var $searchButton = document.querySelector('#search-home');
+var $searchAgain = document.querySelector('#search-again');
+var $searchPage = document.querySelector('[data-view="search-results"]');
+var tempData = {};
+
 document.addEventListener('DOMContentLoaded', function () {
   data.view = 'home';
 });
@@ -10,9 +19,20 @@ function viewSwap(newView) {
     $oldView.classList.add('hidden');
     data.view = newView;
   }
+  if (data.view === 'collection') {
+    var $collection = document.querySelector('#collection');
+    if (data.collection.length > $collection.childElementCount) {
+      $collection.remove();
+      var $newCollection = document.createElement('div');
+      $newCollection.classList.add('row');
+      $newCollection.setAttribute('id', 'collection');
+      for (var i = 0; i < data.collection.length; i++) {
+        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      }
+      $collectionPage.appendChild($newCollection);
+    }
+  }
 }
-
-var $hamburgerButton = document.querySelector('#hamburger');
 
 $hamburgerButton.addEventListener('click', function () {
   if ($hamburger.classList.contains('hidden')) {
@@ -21,8 +41,6 @@ $hamburgerButton.addEventListener('click', function () {
     $hamburger.classList.add('hidden');
   }
 });
-
-var $hamburger = document.querySelector('#hamburger-open');
 
 $hamburger.addEventListener('click', function () {
   if (event.target.closest('li')) {
@@ -33,8 +51,6 @@ $hamburger.addEventListener('click', function () {
   }
 });
 
-var $navLinks = document.querySelector('#nav-links');
-
 $navLinks.addEventListener('click', function () {
   if (event.target.closest('a')) {
     var $targetLink = event.target;
@@ -43,11 +59,6 @@ $navLinks.addEventListener('click', function () {
     $hamburger.classList.add('hidden');
   }
 });
-
-var $searchButton = document.querySelector('#search-home');
-var $searchAgain = document.querySelector('#search-again');
-var $searchPage = document.querySelector('[data-view="search-results"]');
-var tempData = {};
 
 function search(input) {
   var xhr = new XMLHttpRequest();
@@ -98,6 +109,7 @@ function renderCard(imageUrl, cardID) {
     $cardWrapper.appendChild($collectButton);
     return $cardWrapper;
   }
+  return $cardWrapper;
 }
 
 $searchButton.addEventListener('click', function () {
