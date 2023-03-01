@@ -28,6 +28,7 @@
         <div id="nav-links">
           <h1>TCG Tracker</h1>
           <a data-view-change="home">Home</a>
+          <a data-view-change="collection">Collection</a>
         </div>
         <div>
           <img src="images/pokeball.png" alt="A pokeball.">
@@ -39,6 +40,7 @@
   <section class="hidden" id="hamburger-open">
     <ul>
       <li data-view-change="home"><a>Home/Search</a></li>
+      <li data-view-change="collection"><a>Collection</a></li>
     </ul>
   </section>
 
@@ -71,6 +73,14 @@
         <label for="search-main">Search for a card by name.</label>
         <input type="text" class="search-main" placeholder="Charizard">
         <button class="search" id="search-again">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container hidden" data-view="collection">
+    <div class="row">
+      <div class="column-full">
+        <h2>Your Collection</h2>
       </div>
     </div>
   </section>

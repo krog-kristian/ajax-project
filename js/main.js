@@ -146,5 +146,12 @@ $searchPage.addEventListener('click', function () {
         data.collection.push(newCard);
       }
     }
+    var $removeButtons = $collectedCard.children;
+    $removeButtons.item(2).remove();
+    $removeButtons.item(1).remove();
+    var $checkMark = document.createElement('i');
+    $checkMark.classList.add('fa-solid');
+    $checkMark.classList.add('fa-square-check');
+    $collectedCard.appendChild($checkMark);
   }
 });
