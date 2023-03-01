@@ -5,15 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
   <link rel="icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Teko:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
+    <div id="nav-mobile">
+      <h1>TCG Tracker</h1>
+      <button id="hamburger"><i class="fa-solid fa-bars fa-2xl"></i></button>
+    </div>
+    <div id="nav-desktop">
+      <div class="set-width">
+        <div id="nav-links">
+          <h1>TCG Tracker</h1>
+          <a data-view-change="home">Home</a>
+        </div>
+        <div>
+          <img src="images/pokeball.png" alt="A pokeball.">
+        </div>
+      </div>
+    </div>
   </header>
-  <main>
+
+  <section class="hidden" id="hamburger-open">
+    <ul>
+      <li data-view-change="home"><a>Home/Search</a></li>
+    </ul>
+  </section>
+
+  <main class="container" data-view="home">
+    <div class="row">
+      <div class="column-half order-2">
+        <h2>Welcome to TCG Tracker for Pokemon!</h2>
+        <p>TCG Tracker allows you to search for all your favourite Pokemon cards.
+          It allows you to add them to a collection to keep track of cards you own. You can also view and sort
+          your collection by type and HP. You can also build up to four decks from your collection, no more searching
+          through binders to find the cards you need; and if your a completionist check out the series to see what cards
+          your missing from a set!
+        </p>
+      </div>
+      <div class="column-half order-1 center-justify">
+        <h3 >Get Started</h3>
+        <label for="search-main">Search for a card by name.</label>
+        <input type="text" class="search-main" placeholder="Charizard">
+        <button class="search" id="search-home">Search</button>
+        <div id="card-back">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+      </div>
+    </div>
   </main>
+
+  <section class="container hidden" data-view="search-results">
+    <div class="row">
+      <div class="column-full">
+        <label for="search-main">Search for a card by name.</label>
+        <input type="text" class="search-main" placeholder="Charizard">
+        <button class="search" id="search-again">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
+      Those Icons -
+      Flaticon</a></footer>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
