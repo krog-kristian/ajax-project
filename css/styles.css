@@ -145,18 +145,37 @@ ul {
   width: 100%;
 }
 
+fieldset {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  border: none;
+  justify-content: space-around;
+  background-color: #d9d9d9;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+}
+
 #mobile-decks fieldset {
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
   border: none;
+  background-color: #d9d9d9;
+  border-radius: 0.5rem;
 }
 
 fieldset label {
   display: inline-block;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   font-size: 1.5rem;
+}
+
+fieldset input {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 #decks-desktop {
@@ -227,6 +246,11 @@ fieldset label {
 
 #mobile-decks .card-back {
   width: 100%;
+}
+
+.align-center-row {
+  display: flex;
+  align-items: center;
 }
 
 /* Buttons  */
@@ -427,5 +451,14 @@ a:hover {
 
   #decks-desktop {
     display: flex;
+  }
+
+  fieldset {
+    column-gap: 5rem;
+  }
+
+  fieldset label {
+    padding: 0 1rem;
+    font-size: 1.5rem;
   }
 }
