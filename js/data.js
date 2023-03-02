@@ -2,7 +2,9 @@
 
 var data = {
   view: 'home',
-  collection: []
+  collection: [],
+  highestHp: 0,
+  lowestHp: 10
 };
 
 window.addEventListener('beforeunload', function (event) {

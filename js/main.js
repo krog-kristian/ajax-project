@@ -158,13 +158,19 @@ $searchPage.addEventListener('click', function () {
         newCard.id = tempData.data[i].id;
         newCard.name = tempData.data[i].name;
         newCard.supertype = tempData.data[i].supertype;
-        newCard.hp = tempData.data[i].hp;
+        newCard.hp = Number(tempData.data[i].hp);
         newCard.types = tempData.data[i].types;
         newCard.images = tempData.data[i].images;
         newCard.set = tempData.data[i].set.id;
         newCard.setName = tempData.data[i].set.name;
         newCard.setSeries = tempData.data[i].set.series;
         data.collection.push(newCard);
+        if (newCard.hp > data.highestHp) {
+          data.highestHp = newCard.hp;
+        }
+        if (newCard.hp < data.lowestHp) {
+          data.lowestHp = newCard.hp;
+        }
       }
     }
     var $removeButtons = $collectedCard.children;
