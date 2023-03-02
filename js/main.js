@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     data.view = 'home';
   }
+  getTypes();
 });
 
 function viewSwap(newView) {
@@ -196,3 +197,35 @@ $multiSorter.addEventListener('click', function () {
     }
   }
 });
+var types = [];
+function getTypes() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/types');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    types = xhr.response.data;
+    getSuperTypes();
+  });
+  xhr.send();
+}
+var superTypes = [];
+function getSuperTypes() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/supertypes');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    superTypes = xhr.response.data;
+    renderOptions();
+  });
+  xhr.send();
+}
+
+var $select = document.querySelector('#filter-by');
+function renderOptions() {
+  var renderSelects = types.concat(superTypes);
+  for (var i = 0; i < renderSelects.length; i++) {
+    var $option = document.createElement('option');
+    $option.textContent = renderSelects[i];
+    $select.appendChild($option);
+  }
+}
