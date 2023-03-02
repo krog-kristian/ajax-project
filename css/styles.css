@@ -89,7 +89,7 @@ label {
   margin: 0.75rem 0;
 }
 
-input {
+input[type="text"] {
   width: 15rem;
   padding-left: 0.3rem;
   font-size: 1.2rem;
@@ -145,6 +145,16 @@ ul {
   width: 100%;
 }
 
+fieldset {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#decks-desktop {
+  display: none;
+}
+
 /* Icons and Images   */
 
 .card-wrapper {
@@ -159,18 +169,28 @@ ul {
   border-radius: 0.5rem;
 }
 
-#nav-desktop img {
-  width: 3rem;
-  margin: 0.5rem 0;
+.card-back > img {
+  width: 100%;
+  border-radius: 0.6rem;
 }
 
-#card-back {
+.card-back {
   width: 60%;
   margin: 2rem auto;
 }
 
-#card-back > img {
+.card-deck {
+  width: 60%;
+  margin: 2rem auto;
+}
+
+.card-deck > img {
   width: 100%;
+}
+
+#nav-desktop img {
+  width: 3rem;
+  margin: 0.5rem 0;
 }
 
 /* Buttons  */
@@ -270,6 +290,39 @@ a:hover {
   margin: 0.5rem auto 0;
 }
 
+.deck-btn {
+  padding: 1.2rem 1.5rem;
+  font-size: 1.5rem;
+  border: none;
+  background-image: linear-gradient(#dd0707, #dd070700);
+}
+
+.deck-btn-selected {
+  padding: 1.2rem 1.5rem;
+  font-size: 1.5rem;
+  border: none;
+  background-image: linear-gradient(#031c67, #031c6700);
+  color: #ffd705;
+}
+
+.deck-btn-selected > em {
+  display: block;
+  font-style: normal;
+  margin-top: 0.2rem;
+}
+
+.deck-btn > em {
+  display: block;
+  font-style: normal;
+  margin-top: 0.2rem;
+}
+
+.align-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #hp-sort {
   font-size: 1.2rem;
   border-radius: 0.25rem;
@@ -330,5 +383,13 @@ a:hover {
 
   .mobile-collect {
     display: none;
+  }
+
+  #mobile-decks {
+    display: none;
+  }
+
+  #decks-desktop {
+    display: flex;
   }
 }
