@@ -127,6 +127,20 @@ function renderCard(imageUrl, cardID) {
     $cardWrapper.appendChild($collectButton);
     return $cardWrapper;
   }
+  if (data.view === 'collection') {
+    $addButton = document.createElement('button');
+    $addButton.classList.add('mobile-collect');
+    $addIcon = document.createElement('i');
+    $addIcon.classList.add('fa-solid');
+    $addIcon.classList.add('fa-circle-plus');
+    $addButton.appendChild($addIcon);
+    $cardWrapper.appendChild($addButton);
+    var $addToDeck = document.createElement('button');
+    $addToDeck.classList.add('desktop-collect');
+    $addToDeck.textContent = 'Add to Deck';
+    $cardWrapper.appendChild($addToDeck);
+    return $cardWrapper;
+  }
   return $cardWrapper;
 }
 
