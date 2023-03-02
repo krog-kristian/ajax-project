@@ -6,6 +6,15 @@ var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
 var $searchPage = document.querySelector('[data-view="search-results"]');
 var tempData = {};
+var $searchCollection = document.querySelector('div[data-tabs="search-collection"]');
+var hpSorter = null;
+var $hpButton = document.querySelector('#hp-sort');
+var $multiSorter = document.querySelector('.multi-sorter');
+var $select = document.querySelector('#filter-by');
+var superTypes = [];
+var types = [];
+
+// Load and View Swapping
 
 document.addEventListener('DOMContentLoaded', function () {
   if (data.collection.length > 1) {
@@ -66,6 +75,8 @@ $navLinks.addEventListener('click', function () {
     $hamburger.classList.add('hidden');
   }
 });
+
+// Search API and Render
 
 function search(input) {
   var xhr = new XMLHttpRequest();
@@ -148,6 +159,8 @@ $searchAgain.addEventListener('click', function () {
   $searchInput.value = '';
 });
 
+// Collect Card
+
 $searchPage.addEventListener('click', function () {
   if (event.target.matches('i') || event.target.matches('.desktop-collect')) {
     var $collectedCard = event.target.closest('.card-wrapper');
@@ -186,8 +199,6 @@ $searchPage.addEventListener('click', function () {
 
 // Sort and Filter
 
-var $multiSorter = document.querySelector('.multi-sorter');
-
 $multiSorter.addEventListener('click', function () {
   if (event.target.matches('.tab')) {
     var $oldTab = document.querySelector('.tab-active');
@@ -204,7 +215,7 @@ $multiSorter.addEventListener('click', function () {
     }
   }
 });
-var types = [];
+
 function getTypes() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/types');
@@ -215,7 +226,7 @@ function getTypes() {
   });
   xhr.send();
 }
-var superTypes = [];
+
 function getSuperTypes() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/supertypes');
@@ -227,7 +238,6 @@ function getSuperTypes() {
   xhr.send();
 }
 
-var $select = document.querySelector('#filter-by');
 function renderOptions() {
   var renderSelects = types.concat(superTypes);
   for (var i = 0; i < renderSelects.length; i++) {
@@ -257,9 +267,6 @@ $select.addEventListener('change', function () {
   }
   $collectionPage.appendChild($newCollection);
 });
-
-var hpSorter = null;
-var $hpButton = document.querySelector('#hp-sort');
 
 $hpButton.addEventListener('click', function () {
   if (!hpSorter) {
@@ -294,3 +301,20 @@ $hpButton.addEventListener('click', function () {
     $collectionPage.appendChild($newCollection);
   }
 });
+
+$searchCollection.addEventListener('input', searchAndRender);
+
+function searchAndRender(event) {
+  var cleanEvent = event.target.value.trim().replaceAll("'", '').toLowerCase();
+  var $collection = document.querySelector('#collection');
+  $collection.remove();
+  var $newCollection = document.createElement('div');
+  $newCollection.classList.add('row');
+  $newCollection.setAttribute('id', 'collection');
+  for (var i = 0; i < data.collection.length; i++) {
+    if (data.collection[i].name.replaceAll("'", '').toLowerCase().includes(cleanEvent)) {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    }
+  }
+  $collectionPage.appendChild($newCollection);
+}
