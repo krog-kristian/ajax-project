@@ -226,6 +226,23 @@ function renderOptions() {
   for (var i = 0; i < renderSelects.length; i++) {
     var $option = document.createElement('option');
     $option.textContent = renderSelects[i];
+    $option.setAttribute('value', renderSelects[i]);
     $select.appendChild($option);
   }
 }
+
+$select.addEventListener('change', function () {
+  var $collection = document.querySelector('#collection');
+  $collection.remove();
+  var $newCollection = document.createElement('div');
+  $newCollection.classList.add('row');
+  $newCollection.setAttribute('id', 'collection');
+  for (var i = 0; i < data.collection.length; i++) {
+    if (data.collection[i].types.includes(event.target.value) || data.collection[i].supertype === event.target.value) {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    } else if (event.target.value === '') {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    }
+  }
+  $collectionPage.appendChild($newCollection);
+});
