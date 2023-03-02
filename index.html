@@ -88,16 +88,16 @@
 
         <div class="multi-sorter">
           <div class="tabs">
-            <button class="tab-active">Search</button>
-            <button class="tab">Filter By</button>
+            <button class="tab-active" data-tabs="search-collection">Search</button>
+            <button class="tab" data-tabs="filter-collection">Filter By</button>
           </div>
           <div class="sort-views">
 
-            <div class="hidden" data-view="search-collection">
+            <div class="filter" data-tabs="search-collection">
               <input type="text" placeholder="Search card name">
             </div>
 
-            <div data-view="filter-collection">
+            <div class="filter hidden" data-tabs="filter-collection">
               <select name="filter-by" id="filter-by">
                 <option value="">Choose a filter</option>
                 <option value="fire">fire</option>

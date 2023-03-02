@@ -175,3 +175,24 @@ $searchPage.addEventListener('click', function () {
     $collectedCard.appendChild($checkMark);
   }
 });
+
+// Sort and Filter
+
+var $multiSorter = document.querySelector('.multi-sorter');
+
+$multiSorter.addEventListener('click', function () {
+  if (event.target.matches('.tab')) {
+    var $oldTab = document.querySelector('.tab-active');
+    $oldTab.setAttribute('class', 'tab');
+    event.target.setAttribute('class', 'tab-active');
+    var $tabs = document.querySelectorAll('.filter');
+    var view = event.target.getAttribute('data-tabs');
+    for (var i = 0; i < $tabs.length; i++) {
+      if (view === $tabs[i].getAttribute('data-tabs')) {
+        $tabs[i].classList.remove('hidden');
+      } else {
+        $tabs[i].classList.add('hidden');
+      }
+    }
+  }
+});
