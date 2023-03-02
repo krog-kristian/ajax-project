@@ -83,6 +83,35 @@
         <h2>Your Collection</h2>
       </div>
     </div>
+    <div class="row">
+      <div class="column-half flex-end">
+
+        <div class="multi-sorter">
+          <div class="tabs">
+            <button class="tab-active">Search</button>
+            <button class="tab">Filter By</button>
+          </div>
+          <div class="sort-views">
+
+            <div class="hidden" data-view="search-collection">
+              <input type="text" placeholder="Search card name">
+            </div>
+
+            <div data-view="filter-collection">
+              <select name="filter-by" id="filter-by">
+                <option value="">Choose a filter</option>
+                <option value="fire">fire</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <div>
+          <button id="hp-sort">HP<i class="fa-solid fa-arrow-up-wide-short"></i></button>
+        </div>
+      </div>
+      <div class="column-half"></div>
+    </div>
     <div class="row" id="collection">
     </div>
   </section>
