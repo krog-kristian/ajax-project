@@ -155,6 +155,25 @@ fieldset {
   display: none;
 }
 
+.deck-header {
+  margin: 2rem;
+  padding: 0 4rem;
+  border: none;
+  background-image: linear-gradient(#031c67, #031c6700);
+  color: #ffd705;
+}
+
+.deck-header > p {
+  font-size: 2rem;
+  text-align: center;
+  line-height: 2.5rem;
+}
+
+.deck-header em {
+  display: block;
+  font-style: normal;
+}
+
 /* Icons and Images   */
 
 .card-wrapper {
@@ -180,12 +199,17 @@ fieldset {
 }
 
 .card-deck {
-  width: 60%;
+  width: 80%;
   margin: 2rem auto;
 }
 
 .card-deck > img {
   width: 100%;
+  box-shadow:
+    0.5rem 0.5rem 0.5rem #031c67,
+    1rem 1rem 1rem #031c67cc,
+    1.5rem 1.5rem 1.5rem #031c67ee;
+  border-radius: 0.7rem;
 }
 
 #nav-desktop img {
