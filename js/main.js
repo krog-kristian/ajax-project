@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (data.collection.length > 1) {
     viewSwap('collection');
   } else {
-    data.view = 'home';
+    viewSwap('home');
   }
   getTypes();
 });
@@ -20,8 +20,8 @@ function viewSwap(newView) {
   var $oldView = document.querySelector('[data-view="' + data.view + '"]');
   if (data.view !== newView) {
     var $newView = document.querySelector('[data-view="' + newView + '"]');
-    $newView.classList.remove('hidden');
     $oldView.classList.add('hidden');
+    $newView.classList.remove('hidden');
     data.view = newView;
   } else if ($oldView.classList.contains('hidden')) {
     $oldView.classList.remove('hidden');
@@ -155,6 +155,7 @@ $searchPage.addEventListener('click', function () {
     for (var i = 0; i < tempData.data.length; i++) {
       if (cardID === tempData.data[i].id) {
         var newCard = {};
+        newCard.types = [];
         newCard.id = tempData.data[i].id;
         newCard.name = tempData.data[i].name;
         newCard.supertype = tempData.data[i].supertype;
@@ -244,11 +245,52 @@ $select.addEventListener('change', function () {
   $newCollection.classList.add('row');
   $newCollection.setAttribute('id', 'collection');
   for (var i = 0; i < data.collection.length; i++) {
-    if (data.collection[i].types.includes(event.target.value) || data.collection[i].supertype === event.target.value) {
+    if (data.collection[i].supertype === event.target.value) {
       $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    } else if (types.includes(event.target.value) && data.collection[i].supertype === 'Pokémon') {
+      if (data.collection[i].types.includes(event.target.value)) {
+        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      }
     } else if (event.target.value === '') {
       $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
     }
   }
   $collectionPage.appendChild($newCollection);
+});
+
+var hpSorter = null;
+var $hpButton = document.querySelector('#hp-sort');
+
+$hpButton.addEventListener('click', function () {
+  if (!hpSorter) {
+    hpSorter = true;
+    var $collection = document.querySelector('#collection');
+    $collection.remove();
+    var $newCollection = document.createElement('div');
+    $newCollection.classList.add('row');
+    $newCollection.setAttribute('id', 'collection');
+    for (var i = (data.highestHp / 10); i >= (data.lowestHp / 10); i--) {
+      for (var k = 0; k < data.collection.length; k++) {
+        if ((data.collection[k].hp / 10) === i) {
+          $newCollection.appendChild(renderCard(data.collection[k].images.small, data.collection[k].id));
+        }
+      }
+    }
+    $collectionPage.appendChild($newCollection);
+  } else {
+    hpSorter = false;
+    $collection = document.querySelector('#collection');
+    $collection.remove();
+    $newCollection = document.createElement('div');
+    $newCollection.classList.add('row');
+    $newCollection.setAttribute('id', 'collection');
+    for (var l = (data.lowestHp / 10); l <= (data.highestHp / 10); l++) {
+      for (var j = 0; j < data.collection.length; j++) {
+        if ((data.collection[j].hp / 10) === l) {
+          $newCollection.appendChild(renderCard(data.collection[j].images.small, data.collection[j].id));
+        }
+      }
+    }
+    $collectionPage.appendChild($newCollection);
+  }
 });
