@@ -269,6 +269,7 @@ $select.addEventListener('change', function () {
 });
 
 $hpButton.addEventListener('click', function () {
+  var $arrowIcon = document.querySelector('#hp-sort > i');
   if (!hpSorter) {
     hpSorter = true;
     var $collection = document.querySelector('#collection');
@@ -282,6 +283,9 @@ $hpButton.addEventListener('click', function () {
           $newCollection.appendChild(renderCard(data.collection[k].images.small, data.collection[k].id));
         }
       }
+      $arrowIcon.classList.remove('fa-arrows-up-down');
+      $arrowIcon.classList.remove('fa-arrow-down-short-wide');
+      $arrowIcon.classList.add('fa-arrow-up-wide-short');
     }
     $collectionPage.appendChild($newCollection);
   } else {
@@ -297,6 +301,8 @@ $hpButton.addEventListener('click', function () {
           $newCollection.appendChild(renderCard(data.collection[j].images.small, data.collection[j].id));
         }
       }
+      $arrowIcon.classList.remove('fa-arrow-up-wide-short');
+      $arrowIcon.classList.add('fa-arrow-down-short-wide');
     }
     $collectionPage.appendChild($newCollection);
   }

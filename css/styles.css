@@ -43,6 +43,10 @@ h2 {
   margin: 0 2rem;
 }
 
+.column-full > h2 {
+  font-size: 2rem;
+}
+
 h3 {
   margin: 0;
 }
@@ -135,6 +139,10 @@ ul {
 .flex-end {
   display: flex;
   align-items: flex-end;
+}
+
+.multi-sorter {
+  width: 100%;
 }
 
 /* Icons and Images   */
@@ -310,10 +318,6 @@ a:hover {
 
   h3 {
     text-align: left;
-  }
-
-  input {
-    width: 15rem;
   }
 
   .search {
