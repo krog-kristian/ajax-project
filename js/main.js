@@ -6,21 +6,31 @@ var $searchButton = document.querySelector('#search-home');
 var $searchAgain = document.querySelector('#search-again');
 var $searchPage = document.querySelector('[data-view="search-results"]');
 var tempData = {};
+var $searchCollection = document.querySelector('div[data-tabs="search-collection"]');
+var hpSorter = null;
+var $hpButton = document.querySelector('#hp-sort');
+var $multiSorter = document.querySelector('.multi-sorter');
+var $select = document.querySelector('#filter-by');
+var superTypes = [];
+var types = [];
+
+// Load and View Swapping
 
 document.addEventListener('DOMContentLoaded', function () {
   if (data.collection.length > 1) {
     viewSwap('collection');
   } else {
-    data.view = 'home';
+    viewSwap('home');
   }
+  getTypes();
 });
 
 function viewSwap(newView) {
   var $oldView = document.querySelector('[data-view="' + data.view + '"]');
   if (data.view !== newView) {
     var $newView = document.querySelector('[data-view="' + newView + '"]');
-    $newView.classList.remove('hidden');
     $oldView.classList.add('hidden');
+    $newView.classList.remove('hidden');
     data.view = newView;
   } else if ($oldView.classList.contains('hidden')) {
     $oldView.classList.remove('hidden');
@@ -65,6 +75,8 @@ $navLinks.addEventListener('click', function () {
     $hamburger.classList.add('hidden');
   }
 });
+
+// Search API and Render
 
 function search(input) {
   var xhr = new XMLHttpRequest();
@@ -147,6 +159,8 @@ $searchAgain.addEventListener('click', function () {
   $searchInput.value = '';
 });
 
+// Collect Card
+
 $searchPage.addEventListener('click', function () {
   if (event.target.matches('i') || event.target.matches('.desktop-collect')) {
     var $collectedCard = event.target.closest('.card-wrapper');
@@ -154,16 +168,23 @@ $searchPage.addEventListener('click', function () {
     for (var i = 0; i < tempData.data.length; i++) {
       if (cardID === tempData.data[i].id) {
         var newCard = {};
+        newCard.types = [];
         newCard.id = tempData.data[i].id;
         newCard.name = tempData.data[i].name;
         newCard.supertype = tempData.data[i].supertype;
-        newCard.hp = tempData.data[i].hp;
+        newCard.hp = Number(tempData.data[i].hp);
         newCard.types = tempData.data[i].types;
         newCard.images = tempData.data[i].images;
         newCard.set = tempData.data[i].set.id;
         newCard.setName = tempData.data[i].set.name;
         newCard.setSeries = tempData.data[i].set.series;
         data.collection.push(newCard);
+        if (newCard.hp > data.highestHp) {
+          data.highestHp = newCard.hp;
+        }
+        if (newCard.hp < data.lowestHp) {
+          data.lowestHp = newCard.hp;
+        }
       }
     }
     var $removeButtons = $collectedCard.children;
@@ -175,3 +196,131 @@ $searchPage.addEventListener('click', function () {
     $collectedCard.appendChild($checkMark);
   }
 });
+
+// Sort and Filter
+
+$multiSorter.addEventListener('click', function () {
+  if (event.target.matches('.tab')) {
+    var $oldTab = document.querySelector('.tab-active');
+    $oldTab.setAttribute('class', 'tab');
+    event.target.setAttribute('class', 'tab-active');
+    var $tabs = document.querySelectorAll('.filter');
+    var view = event.target.getAttribute('data-tabs');
+    for (var i = 0; i < $tabs.length; i++) {
+      if (view === $tabs[i].getAttribute('data-tabs')) {
+        $tabs[i].classList.remove('hidden');
+      } else {
+        $tabs[i].classList.add('hidden');
+      }
+    }
+  }
+});
+
+function getTypes() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/types');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    types = xhr.response.data;
+    getSuperTypes();
+  });
+  xhr.send();
+}
+
+function getSuperTypes() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/supertypes');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    superTypes = xhr.response.data;
+    renderOptions();
+  });
+  xhr.send();
+}
+
+function renderOptions() {
+  var renderSelects = types.concat(superTypes);
+  for (var i = 0; i < renderSelects.length; i++) {
+    var $option = document.createElement('option');
+    $option.textContent = renderSelects[i];
+    $option.setAttribute('value', renderSelects[i]);
+    $select.appendChild($option);
+  }
+}
+
+$select.addEventListener('change', function () {
+  var $collection = document.querySelector('#collection');
+  $collection.remove();
+  var $newCollection = document.createElement('div');
+  $newCollection.classList.add('row');
+  $newCollection.setAttribute('id', 'collection');
+  for (var i = 0; i < data.collection.length; i++) {
+    if (data.collection[i].supertype === event.target.value) {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    } else if (types.includes(event.target.value) && data.collection[i].supertype === 'Pokémon') {
+      if (data.collection[i].types.includes(event.target.value)) {
+        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      }
+    } else if (event.target.value === '') {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    }
+  }
+  $collectionPage.appendChild($newCollection);
+});
+
+$hpButton.addEventListener('click', function () {
+  var $arrowIcon = document.querySelector('#hp-sort > i');
+  if (!hpSorter) {
+    hpSorter = true;
+    var $collection = document.querySelector('#collection');
+    $collection.remove();
+    var $newCollection = document.createElement('div');
+    $newCollection.classList.add('row');
+    $newCollection.setAttribute('id', 'collection');
+    for (var i = (data.highestHp / 10); i >= (data.lowestHp / 10); i--) {
+      for (var k = 0; k < data.collection.length; k++) {
+        if ((data.collection[k].hp / 10) === i) {
+          $newCollection.appendChild(renderCard(data.collection[k].images.small, data.collection[k].id));
+        }
+      }
+      $arrowIcon.classList.remove('fa-arrows-up-down');
+      $arrowIcon.classList.remove('fa-arrow-down-short-wide');
+      $arrowIcon.classList.add('fa-arrow-up-wide-short');
+    }
+    $collectionPage.appendChild($newCollection);
+  } else {
+    hpSorter = false;
+    $collection = document.querySelector('#collection');
+    $collection.remove();
+    $newCollection = document.createElement('div');
+    $newCollection.classList.add('row');
+    $newCollection.setAttribute('id', 'collection');
+    for (var l = (data.lowestHp / 10); l <= (data.highestHp / 10); l++) {
+      for (var j = 0; j < data.collection.length; j++) {
+        if ((data.collection[j].hp / 10) === l) {
+          $newCollection.appendChild(renderCard(data.collection[j].images.small, data.collection[j].id));
+        }
+      }
+      $arrowIcon.classList.remove('fa-arrow-up-wide-short');
+      $arrowIcon.classList.add('fa-arrow-down-short-wide');
+    }
+    $collectionPage.appendChild($newCollection);
+  }
+});
+
+$searchCollection.addEventListener('input', searchAndRender);
+
+function searchAndRender(event) {
+  var cleanEvent = event.target.value.trim().replaceAll("'", '').toLowerCase();
+  var $collection = document.querySelector('#collection');
+  $collection.remove();
+  var $newCollection = document.createElement('div');
+  $newCollection.classList.add('row');
+  $newCollection.setAttribute('id', 'collection');
+  for (var i = 0; i < data.collection.length; i++) {
+    if (data.collection[i].name.replaceAll("'", '').toLowerCase().includes(cleanEvent)) {
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+    }
+  }
+  $collectionPage.appendChild($newCollection);
+}

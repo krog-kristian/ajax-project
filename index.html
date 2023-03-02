@@ -55,7 +55,7 @@
           your missing from a set!
         </p>
       </div>
-      <div class="column-half order-1 center-justify">
+      <div class="column-half order-1">
         <h3 >Get Started</h3>
         <label for="search-main">Search for a card by name.</label>
         <input type="text" class="search-main" placeholder="Charizard">
@@ -82,6 +82,37 @@
       <div class="column-full">
         <h2>Your Collection</h2>
       </div>
+    </div>
+    <div class="row">
+      <div class="column-half flex-end">
+
+        <div class="multi-sorter flex-end">
+          <div>
+            <div class="tabs">
+              <button class="tab-active" data-tabs="search-collection">Search</button>
+              <button class="tab" data-tabs="filter-collection">Filter By</button>
+            </div>
+            <div class="sort-views">
+
+              <div class="filter" data-tabs="search-collection">
+                <input type="text" placeholder="Search card name">
+              </div>
+
+              <div class="filter hidden" data-tabs="filter-collection">
+                <select name="filter-by" id="filter-by">
+                  <option value="">Choose a filter</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+          <div>
+            <button id="hp-sort">HP<i class="fa-solid fa-arrows-up-down"></i></button>
+          </div>
+        </div>
+
+      </div>
+      <div class="column-half"></div>
     </div>
     <div class="row" id="collection">
     </div>
