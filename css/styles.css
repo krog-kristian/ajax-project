@@ -142,6 +142,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 }
 
 #clear-deck {
@@ -154,6 +155,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 }
 
 #hamburger-open li {
@@ -196,10 +198,11 @@ fieldset {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+  margin: 1rem 0 0;
   border: none;
   background-color: #d9d9d9;
   border-radius: 0.5rem;
+  padding: 0;
 }
 
 fieldset label {
@@ -209,8 +212,8 @@ fieldset label {
 }
 
 fieldset input {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.2rem;
+  width: 1.2rem;
 }
 
 #decks-desktop {
@@ -229,11 +232,6 @@ fieldset input {
   font-size: 2rem;
   text-align: center;
   line-height: 2.5rem;
-}
-
-.deck-header em {
-  display: block;
-  font-style: normal;
 }
 
 /* Icons and Images   */
@@ -277,10 +275,6 @@ fieldset input {
 #nav-desktop img {
   width: 3rem;
   margin: 0.5rem 0;
-}
-
-#mobile-decks .card-back {
-  width: 100%;
 }
 
 .align-center-row {
@@ -545,11 +539,28 @@ a:hover {
   }
 
   fieldset {
-    column-gap: 5rem;
+    column-gap: 4.5rem;
   }
 
   fieldset label {
     padding: 0 1rem;
     font-size: 1.5rem;
   }
+}
+
+/* Special Features */
+
+@keyframes deck-full {
+  0% { color: #dd0707; }
+  20% { color: black; }
+  40% { color: #dd0707; }
+  60% { color: black; }
+  80% { color: #dd0707; }
+  100% { color: black; }
+}
+
+#deck-full {
+  animation: deck-full 5s;
+  font-size: 1.2rem;
+  display: inline;
 }

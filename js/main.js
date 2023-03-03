@@ -363,7 +363,12 @@ function addToDeck(cardID) {
   if (data.decks[selectedDeck].size === 60) {
     scroll(top);
     var $fullDeck = document.querySelector('#deck-' + (selectedDeck + 1) + '-col');
-    $fullDeck.nextElementSibling.textContent = $fullDeck.nextElementSibling.textContent + '-DECK FULL-';
+    var $deckWarning = document.createElement('p');
+    $deckWarning.setAttribute('id', 'deck-full');
+    $deckWarning.textContent = 'FULL';
+    var $warningDiv = $fullDeck.closest('div');
+    $warningDiv.appendChild($deckWarning);
+    setTimeout(removeWarning, 5000);
   } else {
     for (var i = 0; i < data.collection.length; i++) {
       if (cardID === data.collection[i].id) {
@@ -373,6 +378,11 @@ function addToDeck(cardID) {
       }
     }
   }
+}
+
+function removeWarning() {
+  var $warning = document.querySelector('#deck-full');
+  $warning.remove();
 }
 
 var deckToRender = 0;
@@ -437,15 +447,9 @@ $deckPage.addEventListener('click', function () {
       renameDeck(true, '', deckToRender);
     }
   }
-  if (event.target.matches('.deck-btn') || event.target.matches('.deck-btn em')) {
-    if (event.target.matches('button')) {
-      var targetData = event.target.getAttribute('data-deck');
-      var $button = event.target;
-    }
-    if (event.target.matches('em')) {
-      targetData = event.target.closest('button').getAttribute('data-deck');
-      $button = event.target.closest('button');
-    }
+  if (event.target.matches('.deck-btn')) {
+    var targetData = event.target.getAttribute('data-deck');
+    var $button = event.target;
     if (Number(targetData) !== deckToRender) {
       deckToRender = Number(targetData);
       $oldDeck = document.querySelector('.deck-btn-selected');
@@ -463,20 +467,23 @@ $deckPage.addEventListener('click', function () {
 
 function renameDeck(isLoad, newName, deck) {
   var $deckHeader = document.querySelector('.deck-header p');
-
   if (!isLoad) {
     var $deckButton = document.querySelector('[data-deck="' + deckToRender + '"]');
     var $deckRadio = document.querySelector('#deck-' + (deckToRender + 1));
+    var $deckCollectPage = document.querySelector('#deck-' + (deckToRender + 1) + '-col');
     data.decks[deckToRender].name = newName;
     $deckHeader.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
     $deckButton.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
     $deckRadio.nextElementSibling.textContent = newName;
+    $deckCollectPage.nextElementSibling.textContent = newName;
   } else if (isLoad) {
     $deckButton = document.querySelector('[data-deck="' + deck + '"]');
     $deckRadio = document.querySelector('#deck-' + (deck + 1));
+    $deckCollectPage = document.querySelector('#deck-' + (deck + 1) + '-col');
     $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deckToRender].size + '/60';
     $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
     $deckRadio.nextElementSibling.textContent = data.decks[deck].name;
+    $deckCollectPage.nextElementSibling.textContent = data.decks[deck].name;
   }
 }
 
