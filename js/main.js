@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     viewSwap('home');
   }
   getTypes();
+  for (var i = 0; i < data.decks.length; i++) {
+    renameDeck(true, '', i);
+  }
 });
 
 function viewSwap(newView) {
@@ -347,7 +350,7 @@ var selectedDeck = 0;
 $collectionPage.addEventListener('click', function () {
   if (event.target.matches('[name="deck-add"] input') || event.target.matches('[name="deck-add"] label')) {
     var $deckSelect = event.target.closest('div').firstElementChild;
-    if ($deckSelect.value !== selectedDeck) {
+    if (Number($deckSelect.value) !== selectedDeck) {
       selectedDeck = Number($deckSelect.value);
     }
   }
@@ -366,6 +369,7 @@ function addToDeck(cardID) {
       if (cardID === data.collection[i].id) {
         data.decks[selectedDeck].collection.push(data.collection[i]);
         data.decks[selectedDeck].size++;
+        deckSizeCheck(selectedDeck);
       }
     }
   }
@@ -392,13 +396,93 @@ function renderDeck(deckNumber) {
 
 $deckPage.addEventListener('click', function () {
   if (event.target.matches('.rename-deck') || event.target.matches('.rename-deck > i')) {
-    // console.log('edit deck');
+    var $renameDeck = document.querySelector('#rename-deck');
+    $renameDeck.classList.remove('hidden');
   }
   if (event.target.matches('.clear-deck')) {
-    // console.log('clear deck');
+    var $clearDeck = document.querySelector('#clear-deck');
+    $clearDeck.classList.remove('hidden');
+  }
+  if (event.target.matches('#rename-deck .confirm')) {
+    var $newName = document.querySelector('#new-name');
+    if ($newName.value.trim() !== '') {
+      renameDeck(false, $newName.value);
+      var $closeModal = event.target.closest('.modal').parentElement;
+      $closeModal.classList.add('hidden');
+    }
+  }
+  if (event.target.matches('#clear-deck .confirm')) {
+    data.decks[deckToRender].size = 0;
+    data.decks[deckToRender].collection = [];
+    deckSizeCheck(deckToRender);
+    renderDeck(deckToRender);
+    $closeModal = event.target.closest('.modal').parentElement;
+    $closeModal.classList.add('hidden');
+  }
+  if (event.target.matches('.cancel')) {
+    $closeModal = event.target.closest('.modal').parentElement;
+    $closeModal.classList.add('hidden');
+  }
+  if (event.target.matches('#mobile-decks input') || event.target.matches('#mobile-decks label')) {
+    var $deckSelect = event.target.closest('div').firstElementChild;
+    if (Number($deckSelect.value) !== deckToRender) {
+      deckToRender = Number($deckSelect.value);
+      var $oldDeck = document.querySelector('.deck-btn-selected');
+      $oldDeck.classList.remove('deck-btn-selected');
+      $oldDeck.classList.add('deck-btn');
+      var $newDeck = document.querySelector('[data-deck="' + deckToRender + '"]');
+      $newDeck.classList.add('deck-btn-selected');
+      $newDeck.classList.remove('deck-btn');
+      renderDeck(deckToRender);
+      renameDeck(true, '', deckToRender);
+    }
+  }
+  if (event.target.matches('.deck-btn') || event.target.matches('.deck-btn em')) {
+    if (event.target.matches('button')) {
+      var targetData = event.target.getAttribute('data-deck');
+      var $button = event.target;
+    }
+    if (event.target.matches('em')) {
+      targetData = event.target.closest('button').getAttribute('data-deck');
+      $button = event.target.closest('button');
+    }
+    if (Number(targetData) !== deckToRender) {
+      deckToRender = Number(targetData);
+      $oldDeck = document.querySelector('.deck-btn-selected');
+      $oldDeck.classList.remove('deck-btn-selected');
+      $oldDeck.classList.add('deck-btn');
+      $button.classList.remove('deck-btn');
+      $button.classList.add('deck-btn-selected');
+      var $radioSelect = document.querySelector('#deck-' + (deckToRender + 1));
+      $radioSelect.checked = true;
+      renderDeck(deckToRender);
+      renameDeck(true, '', deckToRender);
+    }
   }
 });
 
-// function renameDeck() {
+function renameDeck(isLoad, newName, deck) {
+  var $deckHeader = document.querySelector('.deck-header p');
 
-// }
+  if (!isLoad) {
+    var $deckButton = document.querySelector('[data-deck="' + deckToRender + '"]');
+    var $deckRadio = document.querySelector('#deck-' + (deckToRender + 1));
+    data.decks[deckToRender].name = newName;
+    $deckHeader.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
+    $deckButton.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
+    $deckRadio.nextElementSibling.textContent = newName;
+  } else if (isLoad) {
+    $deckButton = document.querySelector('[data-deck="' + deck + '"]');
+    $deckRadio = document.querySelector('#deck-' + (deck + 1));
+    $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deckToRender].size + '/60';
+    $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
+    $deckRadio.nextElementSibling.textContent = data.decks[deck].name;
+  }
+}
+
+function deckSizeCheck(deck) {
+  var $deckButton = document.querySelector('[data-deck="' + deck + '"]');
+  var $deckHeader = document.querySelector('.deck-header p');
+  $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deck].size + '/60';
+  $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
+}

@@ -144,7 +144,7 @@
     <div class="hidden" id="rename-deck">
       <div class="modal">
         <label for="rename">Deck Name</label>
-        <input type="text">
+        <input type="text" id="new-name">
         <div>
           <button class="cancel">CANCEL</button>
           <button class="confirm">CONFIRM</button>
@@ -195,31 +195,31 @@
         <div class="card-deck">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
-        <button class="deck-btn-selected">Deck 1 <em>0/60</em></button>
+        <button class="deck-btn-selected" data-deck="0">Deck 1 0/60</button>
       </div>
       <div class="column-quarter align-center-column">
         <div class="card-deck">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
-        <button class="deck-btn">Deck 2 <em>0/60</em></button>
+        <button class="deck-btn" data-deck="1">Deck 2 0/60</button>
       </div>
       <div class="column-quarter align-center-column">
         <div class="card-deck">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
-        <button class="deck-btn">Deck 3 <em>0/60</em></button>
+        <button class="deck-btn" data-deck="2">Deck 3 0/60</button>
       </div>
       <div class="column-quarter align-center-column">
         <div class="card-deck">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
-        <button class="deck-btn">Deck 4 <em>0/60</em></button>
+        <button class="deck-btn" data-deck="3">Deck 4 0/60</button>
       </div>
     </div>
 
     <div class="row">
       <div class="column-full align-center-column">
-        <div class="deck-header"><p>Deck 1<em>0/60</em></p></div>
+        <div class="deck-header"><p>Deck 1 0/60</p></div>
         <div>
           <button class="rename-deck">Deck Name<i class="fa-solid fa-pen-to-square"></i></button>
           <button class="clear-deck">Clear Deck</button>
