@@ -121,6 +121,41 @@ select {
   z-index: 1;
 }
 
+.modal {
+  width: 25rem;
+  background-color: #f6f6f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#rename-deck {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#clear-deck {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #hamburger-open li {
   border-bottom: 0.4rem solid #031c67;
   padding: 1rem;
@@ -306,6 +341,26 @@ fieldset input {
   font-size: 1.2rem;
   padding: 0.2rem 0.4rem;
   margin: 0 0.2rem;
+}
+
+.cancel {
+  background-color: #f6f6f6;
+  color: #dd0707;
+  border: 0.1rem solid #dd0707;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.4rem;
+  margin: 1rem 2rem;
+}
+
+.confirm {
+  background-color: #f6f6f6;
+  color: #007bff;
+  border: 0.1rem solid #007bff;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.4rem;
+  margin: 1rem 2rem;
 }
 
 .tab-active {

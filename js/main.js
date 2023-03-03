@@ -389,3 +389,16 @@ function renderDeck(deckNumber) {
   }
   $deckPage.appendChild($newDeck);
 }
+
+$deckPage.addEventListener('click', function () {
+  if (event.target.matches('.rename-deck') || event.target.matches('.rename-deck > i')) {
+    // console.log('edit deck');
+  }
+  if (event.target.matches('.clear-deck')) {
+    // console.log('clear deck');
+  }
+});
+
+// function renameDeck() {
+
+// }
