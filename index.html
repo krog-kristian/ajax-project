@@ -27,9 +27,10 @@
       <div class="set-width">
         <div id="nav-links">
           <h1>TCG Tracker</h1>
-          <a data-view-change="home">Home</a>
+          <a data-view-change="home">Home/Search</a>
           <a data-view-change="collection">Collection</a>
           <a data-view-change="decks">Decks</a>
+          <a data-view-change="series">Series</a>
         </div>
         <div>
           <img src="images/pokeball.png" alt="A pokeball.">
@@ -43,6 +44,7 @@
       <li data-view-change="home"><a>Home/Search</a></li>
       <li data-view-change="collection"><a>Collection</a></li>
       <li data-view-change="decks"><a>Decks</a></li>
+      <li data-view-change="series"><a>Series</a></li>
     </ul>
   </section>
 
@@ -227,6 +229,29 @@
       </div>
     </div>
     <div class="row" id="deck-cards"></div>
+  </section>
+
+  <section class="container hidden" data-view="series">
+    <div class="row">
+      <div class="column-full">
+        <div>
+          <label for="series">Series</label>
+          <select name="series" id="series">
+            <option value="none">Choose a series...</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row series"></div>
+  </section>
+
+  <section class="container hidden" data-view="sets">
+    <div class="column-full">
+      <div id="set-logo"><img src="" alt="Set logo"></div>
+      <h4 id="set-title">
+
+      </h4>
+    </div>
   </section>
 
   <footer class="container"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
