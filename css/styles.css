@@ -551,4 +551,5 @@ a:hover {
   animation: deck-full 5s;
   font-size: 1.2rem;
   display: inline;
+  font-weight: 500;
 }
