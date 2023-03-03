@@ -508,3 +508,33 @@ function removeSingleDeckCard(cardID) {
   data.decks[deckToRender].size--;
   deckSizeCheck(deckToRender);
 }
+
+// Series and Sets
+
+var series = [];
+function retrieveSets() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/sets');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    for (var i = 0; i < xhr.response.data.length; i++) {
+      if (!series.includes(xhr.response.data[i].series)) {
+        series.push(xhr.response.data[i].series);
+      }
+    }
+    buildSeriesMenu();
+  });
+  xhr.send();
+}
+
+function buildSeriesMenu() {
+  var $seriesMenu = document.querySelector('#series');
+  for (var i = 0; i < series.length; i++) {
+    var $seriesOption = document.createElement('option');
+    $seriesOption.textContent = series[i];
+    $seriesOption.setAttribute('value', series[i]);
+    $seriesMenu.appendChild($seriesOption);
+  }
+}
+
+retrieveSets();
