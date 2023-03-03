@@ -13,6 +13,9 @@ var $multiSorter = document.querySelector('.multi-sorter');
 var $select = document.querySelector('#filter-by');
 var superTypes = [];
 var types = [];
+var selectedDeck = 0;
+var deckToRender = 0;
+var $deckPage = document.querySelector('[data-view="decks"]');
 
 // Load and View Swapping
 
@@ -23,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
     viewSwap('home');
   }
   getTypes();
+  for (var i = 0; i < data.decks.length; i++) {
+    renameDeck(true, '', i);
+  }
 });
 
 function viewSwap(newView) {
@@ -47,6 +53,9 @@ function viewSwap(newView) {
       }
       $collectionPage.appendChild($newCollection);
     }
+  }
+  if (data.view === 'decks') {
+    renderDeck(deckToRender);
   }
 }
 
@@ -125,6 +134,20 @@ function renderCard(imageUrl, cardID) {
     $collectButton.classList.add('desktop-collect');
     $collectButton.textContent = 'Collect';
     $cardWrapper.appendChild($collectButton);
+    return $cardWrapper;
+  }
+  if (data.view === 'collection') {
+    $addButton = document.createElement('button');
+    $addButton.classList.add('mobile-collect');
+    $addIcon = document.createElement('i');
+    $addIcon.classList.add('fa-solid');
+    $addIcon.classList.add('fa-circle-plus');
+    $addButton.appendChild($addIcon);
+    $cardWrapper.appendChild($addButton);
+    var $addToDeck = document.createElement('button');
+    $addToDeck.classList.add('desktop-collect');
+    $addToDeck.textContent = 'Add to Deck';
+    $cardWrapper.appendChild($addToDeck);
     return $cardWrapper;
   }
   return $cardWrapper;
@@ -323,4 +346,165 @@ function searchAndRender(event) {
     }
   }
   $collectionPage.appendChild($newCollection);
+}
+
+// Decks
+
+$collectionPage.addEventListener('click', function () {
+  if (event.target.matches('[name="deck-add"] input') || event.target.matches('[name="deck-add"] label')) {
+    var $deckSelect = event.target.closest('div').firstElementChild;
+    if (Number($deckSelect.value) !== selectedDeck) {
+      selectedDeck = Number($deckSelect.value);
+    }
+  }
+  if (event.target.matches('.mobile-collect > i') || event.target.matches('.desktop-collect')) {
+    addToDeck(event.target.closest('.card-wrapper').getAttribute('data-location'));
+  }
+});
+
+function addToDeck(cardID) {
+  if (data.decks[selectedDeck].size === 60) {
+    scroll(top);
+    var $fullDeck = document.querySelector('#deck-' + (selectedDeck + 1) + '-col');
+    var $deckWarning = document.createElement('p');
+    $deckWarning.setAttribute('id', 'deck-full');
+    $deckWarning.textContent = 'FULL';
+    var $warningDiv = $fullDeck.closest('div');
+    $warningDiv.appendChild($deckWarning);
+    setTimeout(removeWarning, 5000);
+  } else {
+    for (var i = 0; i < data.collection.length; i++) {
+      if (cardID === data.collection[i].id) {
+        data.decks[selectedDeck].collection.push(data.collection[i]);
+        data.decks[selectedDeck].size++;
+        deckSizeCheck(selectedDeck);
+      }
+    }
+  }
+}
+
+function removeWarning() {
+  var $warning = document.querySelector('#deck-full');
+  $warning.remove();
+}
+
+function renderDeck(deckNumber) {
+  var $deck = document.querySelector('#deck-cards');
+  $deck.remove();
+  var $newDeck = document.createElement('div');
+  $newDeck.classList.add('row');
+  $newDeck.setAttribute('id', 'deck-cards');
+  for (var i = 0; i < data.decks[deckNumber].collection.length; i++) {
+    var $removeButton = document.createElement('button');
+    $removeButton.classList.add('remove-card');
+    $removeButton.textContent = 'Remove';
+    var $card = renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id);
+    $card.appendChild($removeButton);
+    $newDeck.appendChild($card);
+  }
+  $deckPage.appendChild($newDeck);
+}
+
+$deckPage.addEventListener('click', function () {
+  if (event.target.matches('.rename-deck') || event.target.matches('.rename-deck > i')) {
+    var $renameDeck = document.querySelector('#rename-deck');
+    $renameDeck.classList.remove('hidden');
+  }
+  if (event.target.matches('.clear-deck')) {
+    var $clearDeck = document.querySelector('#clear-deck');
+    $clearDeck.classList.remove('hidden');
+  }
+  if (event.target.matches('#rename-deck .confirm')) {
+    var $newName = document.querySelector('#new-name');
+    if ($newName.value.trim() !== '') {
+      renameDeck(false, $newName.value);
+      var $closeModal = event.target.closest('.modal').parentElement;
+      $closeModal.classList.add('hidden');
+      $newName.value = '';
+    }
+  }
+  if (event.target.matches('#clear-deck .confirm')) {
+    data.decks[deckToRender].size = 0;
+    data.decks[deckToRender].collection = [];
+    deckSizeCheck(deckToRender);
+    renderDeck(deckToRender);
+    $closeModal = event.target.closest('.modal').parentElement;
+    $closeModal.classList.add('hidden');
+  }
+  if (event.target.matches('.cancel')) {
+    $closeModal = event.target.closest('.modal').parentElement;
+    $closeModal.classList.add('hidden');
+  }
+  if (event.target.matches('#mobile-decks input') || event.target.matches('#mobile-decks label')) {
+    var $deckSelect = event.target.closest('div').firstElementChild;
+    if (Number($deckSelect.value) !== deckToRender) {
+      deckToRender = Number($deckSelect.value);
+      var $oldDeck = document.querySelector('.deck-btn-selected');
+      $oldDeck.classList.remove('deck-btn-selected');
+      $oldDeck.classList.add('deck-btn');
+      var $newDeck = document.querySelector('[data-deck="' + deckToRender + '"]');
+      $newDeck.classList.add('deck-btn-selected');
+      $newDeck.classList.remove('deck-btn');
+      renderDeck(deckToRender);
+      renameDeck(true, '', deckToRender);
+    }
+  }
+  if (event.target.matches('.deck-btn')) {
+    var targetData = event.target.getAttribute('data-deck');
+    var $button = event.target;
+    if (Number(targetData) !== deckToRender) {
+      deckToRender = Number(targetData);
+      $oldDeck = document.querySelector('.deck-btn-selected');
+      $oldDeck.classList.remove('deck-btn-selected');
+      $oldDeck.classList.add('deck-btn');
+      $button.classList.remove('deck-btn');
+      $button.classList.add('deck-btn-selected');
+      var $radioSelect = document.querySelector('#deck-' + (deckToRender + 1));
+      $radioSelect.checked = true;
+      renderDeck(deckToRender);
+      renameDeck(true, '', deckToRender);
+    }
+  }
+  if (event.target.matches('.remove-card')) {
+    var $cardWrapper = event.target.closest('.card-wrapper');
+    var cardID = $cardWrapper.getAttribute('data-location');
+    $cardWrapper.remove();
+    removeSingleDeckCard(cardID);
+  }
+});
+
+function renameDeck(isLoad, newName, deck) {
+  var $deckHeader = document.querySelector('.deck-header p');
+  if (!isLoad) {
+    var $deckButton = document.querySelector('[data-deck="' + deckToRender + '"]');
+    var $deckRadio = document.querySelector('#deck-' + (deckToRender + 1));
+    var $deckCollectPage = document.querySelector('#deck-' + (deckToRender + 1) + '-col');
+    data.decks[deckToRender].name = newName;
+    $deckHeader.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
+    $deckButton.textContent = newName + ' ' + data.decks[deckToRender].size + '/60';
+    $deckRadio.nextElementSibling.textContent = newName;
+    $deckCollectPage.nextElementSibling.textContent = newName;
+  } else if (isLoad) {
+    $deckButton = document.querySelector('[data-deck="' + deck + '"]');
+    $deckRadio = document.querySelector('#deck-' + (deck + 1));
+    $deckCollectPage = document.querySelector('#deck-' + (deck + 1) + '-col');
+    $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deckToRender].size + '/60';
+    $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
+    $deckRadio.nextElementSibling.textContent = data.decks[deck].name;
+    $deckCollectPage.nextElementSibling.textContent = data.decks[deck].name;
+  }
+}
+
+function deckSizeCheck(deck) {
+  var $deckButton = document.querySelector('[data-deck="' + deck + '"]');
+  var $deckHeader = document.querySelector('.deck-header p');
+  $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deck].size + '/60';
+  $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
+}
+
+function removeSingleDeckCard(cardID) {
+  var removeIndex = data.decks[deckToRender].collection.indexOf(cardID);
+  data.decks[deckToRender].collection.splice(removeIndex, 1);
+  data.decks[deckToRender].size--;
+  deckSizeCheck(deckToRender);
 }

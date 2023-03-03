@@ -29,6 +29,7 @@
           <h1>TCG Tracker</h1>
           <a data-view-change="home">Home</a>
           <a data-view-change="collection">Collection</a>
+          <a data-view-change="decks">Decks</a>
         </div>
         <div>
           <img src="images/pokeball.png" alt="A pokeball.">
@@ -41,6 +42,7 @@
     <ul>
       <li data-view-change="home"><a>Home/Search</a></li>
       <li data-view-change="collection"><a>Collection</a></li>
+      <li data-view-change="decks"><a>Decks</a></li>
     </ul>
   </section>
 
@@ -60,7 +62,7 @@
         <label for="search-main">Search for a card by name.</label>
         <input type="text" class="search-main" placeholder="Charizard">
         <button class="search" id="search-home">Search</button>
-        <div id="card-back">
+        <div class="card-back">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
       </div>
@@ -84,7 +86,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="column-half flex-end">
+      <div class="column-half align-center-row">
 
         <div class="multi-sorter flex-end">
           <div>
@@ -112,10 +114,119 @@
         </div>
 
       </div>
-      <div class="column-half"></div>
+      <div class="column-half">
+        <fieldset name="deck-add">
+          <div class="align-center-row">
+            <input type="radio" id="deck-1-col" name="deck-add" value="0" checked>
+            <label for="deck-1-col">Deck 1</label>
+          </div>
+          <div class="align-center-row">
+            <input type="radio" id="deck-2-col" name="deck-add" value="1">
+            <label for="deck-2-col">Deck 2</label>
+          </div>
+          <div class="align-center-row">
+            <input type="radio" id="deck-3-col" name="deck-add" value="2">
+            <label for="deck-3-col">Deck 3</label>
+          </div>
+          <div class="align-center-row">
+            <input type="radio" id="deck-4-col" name="deck-add" value="3">
+            <label for="deck-4-col">Deck 4</label>
+          </div>
+        </fieldset>
+      </div>
     </div>
     <div class="row" id="collection">
     </div>
+  </section>
+
+  <section class="container hidden" data-view="decks">
+
+    <div class="hidden" id="rename-deck">
+      <div class="modal">
+        <label for="rename">Deck Name</label>
+        <input type="text" id="new-name" maxlength="15">
+        <div>
+          <button class="cancel">CANCEL</button>
+          <button class="confirm">CONFIRM</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden" id="clear-deck">
+      <div class="modal">
+        <p>Are you sure you want to clear the deck?</p>
+        <div>
+          <button class="cancel">CANCEL</button>
+          <button class="confirm">CONFIRM</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="mobile-decks">
+      <div class="column-half">
+        <div class="card-back">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+      </div>
+      <div class="column-half">
+        <fieldset>
+          <div>
+            <input type="radio" id="deck-1" name="decks" value="0" checked>
+            <label for="deck-1">Deck 1</label>
+          </div>
+          <div>
+            <input type="radio" id="deck-2" name="decks" value="1">
+            <label for="deck-2">Deck 2</label>
+          </div>
+          <div>
+            <input type="radio" id="deck-3" name="decks" value="2">
+            <label for="deck-3">Deck 3</label>
+          </div>
+          <div>
+            <input type="radio" id="deck-4" name="decks" value="3">
+            <label for="deck-4">Deck 4</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="row" id="decks-desktop">
+      <div class="column-quarter align-center-column">
+        <div class="card-deck">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+        <button class="deck-btn-selected" data-deck="0">Deck 1 0/60</button>
+      </div>
+      <div class="column-quarter align-center-column">
+        <div class="card-deck">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+        <button class="deck-btn" data-deck="1">Deck 2 0/60</button>
+      </div>
+      <div class="column-quarter align-center-column">
+        <div class="card-deck">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+        <button class="deck-btn" data-deck="2">Deck 3 0/60</button>
+      </div>
+      <div class="column-quarter align-center-column">
+        <div class="card-deck">
+          <img src="images/card-back.jpg" alt="The back of a pokemon card.">
+        </div>
+        <button class="deck-btn" data-deck="3">Deck 4 0/60</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column-full align-center-column">
+        <div class="deck-header"><p>Deck 1 0/60</p></div>
+        <div>
+          <button class="rename-deck">Deck Name<i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="clear-deck">Clear Deck</button>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="deck-cards"></div>
   </section>
 
   <footer class="container"><a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by
