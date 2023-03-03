@@ -420,6 +420,7 @@ $deckPage.addEventListener('click', function () {
       renameDeck(false, $newName.value);
       var $closeModal = event.target.closest('.modal').parentElement;
       $closeModal.classList.add('hidden');
+      $newName.value = '';
     }
   }
   if (event.target.matches('#clear-deck .confirm')) {
