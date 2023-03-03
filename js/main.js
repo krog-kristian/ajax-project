@@ -48,6 +48,9 @@ function viewSwap(newView) {
       $collectionPage.appendChild($newCollection);
     }
   }
+  if (data.view === 'decks') {
+    renderDeck(deckToRender);
+  }
 }
 
 $hamburgerButton.addEventListener('click', function () {
@@ -337,4 +340,47 @@ function searchAndRender(event) {
     }
   }
   $collectionPage.appendChild($newCollection);
+}
+
+// Decks
+var selectedDeck = 0;
+$collectionPage.addEventListener('click', function () {
+  if (event.target.matches('[name="deck-add"] input') || event.target.matches('[name="deck-add"] label')) {
+    var $deckSelect = event.target.closest('div').firstElementChild;
+    if ($deckSelect.value !== selectedDeck) {
+      selectedDeck = Number($deckSelect.value);
+    }
+  }
+  if (event.target.matches('.mobile-collect > i') || event.target.matches('.desktop-collect')) {
+    addToDeck(event.target.closest('.card-wrapper').getAttribute('data-location'));
+  }
+});
+
+function addToDeck(cardID) {
+  if (data.decks[selectedDeck].size === 60) {
+    scroll(top);
+    var $fullDeck = document.querySelector('#deck-' + (selectedDeck + 1) + '-col');
+    $fullDeck.nextElementSibling.textContent = $fullDeck.nextElementSibling.textContent + '-DECK FULL-';
+  } else {
+    for (var i = 0; i < data.collection.length; i++) {
+      if (cardID === data.collection[i].id) {
+        data.decks[selectedDeck].collection.push(data.collection[i]);
+        data.decks[selectedDeck].size++;
+      }
+    }
+  }
+}
+
+var deckToRender = 0;
+var $deckPage = document.querySelector('[data-view="decks"]');
+function renderDeck(deckNumber) {
+  var $deck = document.querySelector('#deck-cards');
+  $deck.remove();
+  var $newDeck = document.createElement('div');
+  $newDeck.classList.add('row');
+  $newDeck.setAttribute('id', 'deck-cards');
+  for (var i = 0; i < data.decks[deckNumber].collection.length; i++) {
+    $newDeck.appendChild(renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id));
+  }
+  $deckPage.appendChild($newDeck);
 }
