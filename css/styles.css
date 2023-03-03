@@ -222,7 +222,7 @@ fieldset input {
 
 .deck-header {
   margin: 2rem;
-  padding: 0 4rem;
+  padding: 0 3rem;
   border: none;
   background-image: linear-gradient(#031c67, #031c6700);
   color: #ffd705;
@@ -448,18 +448,6 @@ a:hover {
   border: none;
   background-image: linear-gradient(#031c67, #031c6700);
   color: #ffd705;
-}
-
-.deck-btn-selected > em {
-  display: block;
-  font-style: normal;
-  margin-top: 0.2rem;
-}
-
-.deck-btn > em {
-  display: block;
-  font-style: normal;
-  margin-top: 0.2rem;
 }
 
 .align-center-column {

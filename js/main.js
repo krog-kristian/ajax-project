@@ -13,6 +13,9 @@ var $multiSorter = document.querySelector('.multi-sorter');
 var $select = document.querySelector('#filter-by');
 var superTypes = [];
 var types = [];
+var selectedDeck = 0;
+var deckToRender = 0;
+var $deckPage = document.querySelector('[data-view="decks"]');
 
 // Load and View Swapping
 
@@ -346,7 +349,7 @@ function searchAndRender(event) {
 }
 
 // Decks
-var selectedDeck = 0;
+
 $collectionPage.addEventListener('click', function () {
   if (event.target.matches('[name="deck-add"] input') || event.target.matches('[name="deck-add"] label')) {
     var $deckSelect = event.target.closest('div').firstElementChild;
@@ -385,8 +388,6 @@ function removeWarning() {
   $warning.remove();
 }
 
-var deckToRender = 0;
-var $deckPage = document.querySelector('[data-view="decks"]');
 function renderDeck(deckNumber) {
   var $deck = document.querySelector('#deck-cards');
   $deck.remove();
