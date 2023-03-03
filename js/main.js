@@ -380,7 +380,12 @@ function renderDeck(deckNumber) {
   $newDeck.classList.add('row');
   $newDeck.setAttribute('id', 'deck-cards');
   for (var i = 0; i < data.decks[deckNumber].collection.length; i++) {
-    $newDeck.appendChild(renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id));
+    var $removeButton = document.createElement('button');
+    $removeButton.classList.add('remove-card');
+    $removeButton.textContent = 'Remove';
+    var $card = renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id);
+    $card.appendChild($removeButton);
+    $newDeck.appendChild($card);
   }
   $deckPage.appendChild($newDeck);
 }

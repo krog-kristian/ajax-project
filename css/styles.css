@@ -283,6 +283,12 @@ fieldset input {
   font-size: 1.5rem;
 }
 
+.rename-deck > i {
+  color: #007bff;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
 #hamburger > i {
   color: #dd0707;
   padding: 0.75rem;
@@ -348,6 +354,36 @@ a:hover {
   font-size: 1.2rem;
   padding: 0.3rem 0.4rem;
   margin: 0.5rem auto 0;
+}
+
+.remove-card {
+  color: #dd0707;
+  border: none;
+  background-color: #f6f6f6;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: underline;
+  margin: 0.5rem auto 0;
+}
+
+.clear-deck {
+  background-color: #f6f6f6;
+  color: #dd0707;
+  border: 0.1rem solid #dd0707;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.4rem;
+  margin: 0 0.2rem;
+}
+
+.rename-deck {
+  background-color: #f6f6f6;
+  color: #007bff;
+  border: 0.1rem solid #007bff;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.4rem;
+  margin: 0 0.2rem;
 }
 
 .deck-btn {
