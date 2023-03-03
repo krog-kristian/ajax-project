@@ -463,6 +463,12 @@ $deckPage.addEventListener('click', function () {
       renameDeck(true, '', deckToRender);
     }
   }
+  if (event.target.matches('.remove-card')) {
+    var $cardWrapper = event.target.closest('.card-wrapper');
+    var cardID = $cardWrapper.getAttribute('data-location');
+    $cardWrapper.remove();
+    removeSingleDeckCard(cardID);
+  }
 });
 
 function renameDeck(isLoad, newName, deck) {
@@ -492,4 +498,11 @@ function deckSizeCheck(deck) {
   var $deckHeader = document.querySelector('.deck-header p');
   $deckHeader.textContent = data.decks[deckToRender].name + ' ' + data.decks[deck].size + '/60';
   $deckButton.textContent = data.decks[deck].name + ' ' + data.decks[deck].size + '/60';
+}
+
+function removeSingleDeckCard(cardID) {
+  var removeIndex = data.decks[deckToRender].collection.indexOf(cardID);
+  data.decks[deckToRender].collection.splice(removeIndex, 1);
+  data.decks[deckToRender].size--;
+  deckSizeCheck(deckToRender);
 }
