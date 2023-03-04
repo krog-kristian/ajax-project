@@ -56,6 +56,19 @@ p {
   line-height: 1.5rem;
 }
 
+.set-name {
+  font-size: 3rem;
+  margin: 1rem auto 2rem;
+  font-weight: 500;
+  line-height: 3rem;
+  text-align: center;
+}
+
+#set-title {
+  font-size: 1.5rem;
+  margin: 0.5rem;
+}
+
 /* secondary layouts */
 
 #nav-mobile {
@@ -216,6 +229,10 @@ fieldset input {
   width: 1.2rem;
 }
 
+[data-view="series"] label {
+  font-size: 1.5rem;
+}
+
 #decks-desktop {
   display: none;
 }
@@ -234,7 +251,32 @@ fieldset input {
   line-height: 2.5rem;
 }
 
+.align-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#set-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
 /* Icons and Images   */
+
+.logo-button > img {
+  width: 100%;
+}
 
 .card-wrapper {
   display: flex;
@@ -280,6 +322,10 @@ fieldset input {
 .align-center-row {
   display: flex;
   align-items: center;
+}
+
+#set-logo > img {
+  width: 100%;
 }
 
 /* Buttons  */
@@ -450,10 +496,11 @@ a:hover {
   color: #ffd705;
 }
 
-.align-center-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.logo-button {
+  background: none;
+  border: none;
+  max-width: 80%;
+  margin: 2rem auto 1rem;
 }
 
 #hp-sort {
@@ -554,6 +601,4 @@ a:hover {
   font-weight: 500;
 }
 
-[data-view="series"] label {
-  font-size: 1.5rem;
-}
+/* Sort To Appropriate Sections */

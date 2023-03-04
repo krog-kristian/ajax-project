@@ -25,11 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     viewSwap('home');
   }
-  getTypes();
-  for (var i = 0; i < data.decks.length; i++) {
-    renameDeck(true, '', i);
-  }
 });
+
+getTypes();
+for (var i = 0; i < data.decks.length; i++) {
+  renameDeck(true, '', i);
+}
 
 function viewSwap(newView) {
   var $oldView = document.querySelector('[data-view="' + data.view + '"]');
@@ -184,7 +185,9 @@ $searchAgain.addEventListener('click', function () {
 
 // Collect Card
 
-$searchPage.addEventListener('click', function () {
+$searchPage.addEventListener('click', collectCard);
+
+function collectCard(event) {
   if (event.target.matches('i') || event.target.matches('.desktop-collect')) {
     var $collectedCard = event.target.closest('.card-wrapper');
     var cardID = $collectedCard.getAttribute('data-location');
@@ -218,7 +221,7 @@ $searchPage.addEventListener('click', function () {
     $checkMark.classList.add('fa-square-check');
     $collectedCard.appendChild($checkMark);
   }
-});
+}
 
 // Sort and Filter
 
@@ -512,11 +515,13 @@ function removeSingleDeckCard(cardID) {
 // Series and Sets
 
 var series = [];
+var setObject = [];
 function retrieveSets() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/sets');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    setObject = xhr.response.data;
     for (var i = 0; i < xhr.response.data.length; i++) {
       if (!series.includes(xhr.response.data[i].series)) {
         series.push(xhr.response.data[i].series);
@@ -526,9 +531,8 @@ function retrieveSets() {
   });
   xhr.send();
 }
-
+var $seriesMenu = document.querySelector('#series');
 function buildSeriesMenu() {
-  var $seriesMenu = document.querySelector('#series');
   for (var i = 0; i < series.length; i++) {
     var $seriesOption = document.createElement('option');
     $seriesOption.textContent = series[i];
@@ -538,3 +542,106 @@ function buildSeriesMenu() {
 }
 
 retrieveSets();
+var $seriesPage = document.querySelector('[data-view="series"]');
+$seriesMenu.addEventListener('change', function () {
+  var $seriesRow = document.querySelector('.series');
+  $seriesRow.remove();
+  var $newSeriesRow = document.createElement('div');
+  $newSeriesRow.classList.add('row');
+  $newSeriesRow.classList.add('series');
+  for (var i = 0; i < setObject.length; i++) {
+    if (event.target.value === setObject[i].series) {
+      var $logoWrapper = document.createElement('div');
+      $logoWrapper.classList.add('column-half');
+      $logoWrapper.classList.add('logo-wrapper');
+      var $logoButton = document.createElement('button');
+      $logoButton.classList.add('logo-button');
+      var $logoImage = document.createElement('img');
+      $logoImage.setAttribute('src', setObject[i].images.logo);
+      $logoImage.setAttribute('data-set', setObject[i].id);
+      $logoButton.appendChild($logoImage);
+      $logoWrapper.appendChild($logoButton);
+      var $setName = document.createElement('p');
+      $setName.textContent = setObject[i].name;
+      $setName.classList.add('set-name');
+      $logoWrapper.appendChild($setName);
+      $newSeriesRow.appendChild($logoWrapper);
+    }
+  }
+  $seriesPage.appendChild($newSeriesRow);
+});
+
+// $seriesPage.addEventListener('click', function () {
+//   if (event.target.matches('.logo-button img')) {
+//     viewSwap('sets');
+//     var $oldSetRow = document.querySelector('.sets');
+//     $oldSetRow.remove();
+//     currentSet = event.target.getAttribute('data-set');
+//     renderSetcards(currentSet);
+//   }
+// });
+// var count = 0;
+// var currentSet = '';
+// var $setsPage = document.querySelector('[data-view="sets"]');
+// function renderSetcards() {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + currentSet);
+//   xhr.responseType = 'json';
+//   xhr.addEventListener('load', function () {
+//     if (xhr.status >= 200 && xhr.status < 300) {
+//       count = 0;
+//       tempData = xhr.response;
+//       var $setRow = document.createElement('div');
+//       $setRow.classList.add('row');
+//       $setRow.classList.add('sets');
+//       $setsPage.appendChild($setRow);
+//       renderTitle();
+//       $setsPage = document.querySelector('.sets');
+//       for (var i = 0; i < xhr.response.data.length; i++) {
+//         console.log('rendering');
+//         $setRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
+//       }
+//       console.log('finished rendering cards');
+//       // $setsPage.appendChild($setRow);
+//     }
+//   });
+//   xhr.send();
+// }
+
+// function renderTitle() {
+//   var $setHeaderImage = document.querySelector('#set-logo img');
+//   var $setCounter = document.querySelector('#set-title');
+//   var $setTitle = document.querySelector('#set-logo p');
+//   for (var j = 0; j < setObject.length; j++) {
+//     console.log('making title');
+//     if (setObject[j].id === currentSet) {
+//       $setHeaderImage.setAttribute('src', setObject[j].images.logo);
+//       $setTitle.textContent = setObject[j].name;
+//       $setCounter.textContent = count + '/' + setObject[j].printedTotal;
+//     }
+//   }
+//   console.log('render title finished');
+// }
+// for (var k = 0; k < data.collection.length; k++) {
+//   if (data.collection[k].id === xhr.response.data[i].id) {
+//     count++;
+//   }
+// }
+
+// $setsPage.addEventListener('click', collectCard);
+// var page = 1;
+// var totalPages = 1;
+// function renderSetcards() {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + currentSet + '&page=' + page + '&pageSize=50');
+//   xhr.responseType = 'json';
+//   xhr.addEventListener('load', function () {
+//     if (xhr.status >= 200 && xhr.status < 300) {
+//       console.log('response', xhr.response);
+//       totalPages += Math.floor(xhr.response.totalCount / xhr.response.pageSize);
+//     }
+//   });
+//   xhr.send();
+// }
+
+// find total pages, then recursively load them!
