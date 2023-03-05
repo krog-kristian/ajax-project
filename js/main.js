@@ -114,7 +114,7 @@ function renderCard(imageUrl, cardID) {
   var $cardImage = document.createElement('img');
   $cardImage.setAttribute('src', imageUrl);
   $cardWrapper.appendChild($cardImage);
-  if (data.view === 'search-results') {
+  if (data.view === 'search-results' || data.view === 'sets') {
     for (var i = 0; i < data.collection.length; i++) {
       if (data.collection[i].id === cardID) {
         var $checkMark = document.createElement('i');
@@ -570,78 +570,72 @@ $seriesMenu.addEventListener('change', function () {
   }
   $seriesPage.appendChild($newSeriesRow);
 });
+var currentSetObject = {};
+$seriesPage.addEventListener('click', function () {
+  if (event.target.matches('.logo-button img')) {
+    viewSwap('sets');
+    var $oldSetRow = document.querySelector('.sets');
+    $oldSetRow.remove();
+    currentSet = event.target.getAttribute('data-set');
+    for (var i = 0; i < setObject.length; i++) {
+      if (currentSet === setObject[i].id) {
+        currentSetObject = setObject[i];
+      }
+    }
+    renderTitle(currentSetObject.images.logo, currentSetObject.name);
+    var totalPages = Math.ceil(currentSetObject.total / 50);
+    var $setRow = document.createElement('div');
+    $setRow.classList.add('sets');
+    $setRow.classList.add('row');
+    $setsPage.appendChild($setRow);
+    tempData.data = [];
+    $titleCount.textContent = '';
+    renderSetPage(1, totalPages);
+  }
+});
+var currentSet = '';
+var $setsPage = document.querySelector('[data-view="sets"]');
 
-// $seriesPage.addEventListener('click', function () {
-//   if (event.target.matches('.logo-button img')) {
-//     viewSwap('sets');
-//     var $oldSetRow = document.querySelector('.sets');
-//     $oldSetRow.remove();
-//     currentSet = event.target.getAttribute('data-set');
-//     renderSetcards(currentSet);
-//   }
-// });
-// var count = 0;
-// var currentSet = '';
-// var $setsPage = document.querySelector('[data-view="sets"]');
-// function renderSetcards() {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + currentSet);
-//   xhr.responseType = 'json';
-//   xhr.addEventListener('load', function () {
-//     if (xhr.status >= 200 && xhr.status < 300) {
-//       count = 0;
-//       tempData = xhr.response;
-//       var $setRow = document.createElement('div');
-//       $setRow.classList.add('row');
-//       $setRow.classList.add('sets');
-//       $setsPage.appendChild($setRow);
-//       renderTitle();
-//       $setsPage = document.querySelector('.sets');
-//       for (var i = 0; i < xhr.response.data.length; i++) {
-//         console.log('rendering');
-//         $setRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
-//       }
-//       console.log('finished rendering cards');
-//       // $setsPage.appendChild($setRow);
-//     }
-//   });
-//   xhr.send();
-// }
+function renderTitle(setImage, setName) {
+  var $setHeaderImage = document.querySelector('#set-logo img');
+  var $setTitle = document.querySelector('#set-logo p');
+  $setHeaderImage.setAttribute('src', setImage);
+  $setTitle.textContent = setName;
+}
 
-// function renderTitle() {
-//   var $setHeaderImage = document.querySelector('#set-logo img');
-//   var $setCounter = document.querySelector('#set-title');
-//   var $setTitle = document.querySelector('#set-logo p');
-//   for (var j = 0; j < setObject.length; j++) {
-//     console.log('making title');
-//     if (setObject[j].id === currentSet) {
-//       $setHeaderImage.setAttribute('src', setObject[j].images.logo);
-//       $setTitle.textContent = setObject[j].name;
-//       $setCounter.textContent = count + '/' + setObject[j].printedTotal;
-//     }
-//   }
-//   console.log('render title finished');
-// }
-// for (var k = 0; k < data.collection.length; k++) {
-//   if (data.collection[k].id === xhr.response.data[i].id) {
-//     count++;
-//   }
-// }
+$setsPage.addEventListener('click', collectCard);
 
-// $setsPage.addEventListener('click', collectCard);
-// var page = 1;
-// var totalPages = 1;
-// function renderSetcards() {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + currentSet + '&page=' + page + '&pageSize=50');
-//   xhr.responseType = 'json';
-//   xhr.addEventListener('load', function () {
-//     if (xhr.status >= 200 && xhr.status < 300) {
-//       console.log('response', xhr.response);
-//       totalPages += Math.floor(xhr.response.totalCount / xhr.response.pageSize);
-//     }
-//   });
-//   xhr.send();
-// }
+function renderSetPage(page, totalPages) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + currentSet + '&page=' + page + '&pageSize=50');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      tempData.data = tempData.data.concat(xhr.response.data);
+      var $setsRow = document.querySelector('.sets');
+      for (var i = 0; i < xhr.response.data.length; i++) {
+        $setsRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
+      }
+      if (page < totalPages) {
+        renderSetPage(page + 1, totalPages);
+      }
+      if (page === totalPages) {
+        countSet();
+      }
+    }
+  });
+  xhr.send();
+}
 
-// find total pages, then recursively load them!
+function countSet() {
+  var count = 0;
+  for (var i = 0; i < tempData.data.length; i++) {
+    for (var k = 0; k < data.collection.length; k++) {
+      if (tempData.data[i].id === data.collection[k].id) {
+        count++;
+      }
+    }
+    $titleCount.textContent = count + '/' + tempData.data.length;
+  }
+}
+var $titleCount = document.querySelector('#set-title');
