@@ -50,7 +50,7 @@ function viewSwap(newView) {
       $newCollection.classList.add('row');
       $newCollection.setAttribute('id', 'collection');
       for (var i = 0; i < data.collection.length; i++) {
-        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id, data.collection[i].name));
       }
       $collectionPage.appendChild($newCollection);
     }
@@ -98,7 +98,7 @@ function search(input) {
       var $cardRow = document.createElement('div');
       $cardRow.classList.add('row');
       for (var i = 0; i < xhr.response.data.length; i++) {
-        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
+        $cardRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id, xhr.response.data[i].name));
       }
       $searchPage.appendChild($cardRow);
     }
@@ -106,13 +106,14 @@ function search(input) {
   xhr.send();
 }
 
-function renderCard(imageUrl, cardID) {
+function renderCard(imageUrl, cardID, name) {
   var $cardWrapper = document.createElement('div');
   $cardWrapper.classList.add('column-quarter');
   $cardWrapper.classList.add('card-wrapper');
   $cardWrapper.setAttribute('data-location', cardID);
   var $cardImage = document.createElement('img');
   $cardImage.setAttribute('src', imageUrl);
+  $cardImage.setAttribute('alt', name);
   $cardWrapper.appendChild($cardImage);
   if (data.view === 'search-results' || data.view === 'sets') {
     for (var i = 0; i < data.collection.length; i++) {
@@ -213,6 +214,9 @@ function collectCard(event) {
         }
       }
     }
+    if (data.view === 'sets') {
+      countSet();
+    }
     var $removeButtons = $collectedCard.children;
     $removeButtons.item(2).remove();
     $removeButtons.item(1).remove();
@@ -282,13 +286,13 @@ $select.addEventListener('change', function () {
   $newCollection.setAttribute('id', 'collection');
   for (var i = 0; i < data.collection.length; i++) {
     if (data.collection[i].supertype === event.target.value) {
-      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id, data.collection[i].name));
     } else if (types.includes(event.target.value) && data.collection[i].supertype === 'Pokémon') {
       if (data.collection[i].types.includes(event.target.value)) {
-        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+        $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id, data.collection[i].name));
       }
     } else if (event.target.value === '') {
-      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id, data.collection[i].name));
     }
   }
   $collectionPage.appendChild($newCollection);
@@ -306,7 +310,7 @@ $hpButton.addEventListener('click', function () {
     for (var i = (data.highestHp / 10); i >= (data.lowestHp / 10); i--) {
       for (var k = 0; k < data.collection.length; k++) {
         if ((data.collection[k].hp / 10) === i) {
-          $newCollection.appendChild(renderCard(data.collection[k].images.small, data.collection[k].id));
+          $newCollection.appendChild(renderCard(data.collection[k].images.small, data.collection[k].id, data.collection[k].name));
         }
       }
       $arrowIcon.classList.remove('fa-arrows-up-down');
@@ -324,7 +328,7 @@ $hpButton.addEventListener('click', function () {
     for (var l = (data.lowestHp / 10); l <= (data.highestHp / 10); l++) {
       for (var j = 0; j < data.collection.length; j++) {
         if ((data.collection[j].hp / 10) === l) {
-          $newCollection.appendChild(renderCard(data.collection[j].images.small, data.collection[j].id));
+          $newCollection.appendChild(renderCard(data.collection[j].images.small, data.collection[j].id, data.collection[j].name));
         }
       }
       $arrowIcon.classList.remove('fa-arrow-up-wide-short');
@@ -345,7 +349,7 @@ function searchAndRender(event) {
   $newCollection.setAttribute('id', 'collection');
   for (var i = 0; i < data.collection.length; i++) {
     if (data.collection[i].name.replaceAll("'", '').toLowerCase().includes(cleanEvent)) {
-      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id));
+      $newCollection.appendChild(renderCard(data.collection[i].images.small, data.collection[i].id, data.collection[i].name));
     }
   }
   $collectionPage.appendChild($newCollection);
@@ -401,7 +405,7 @@ function renderDeck(deckNumber) {
     var $removeButton = document.createElement('button');
     $removeButton.classList.add('remove-card');
     $removeButton.textContent = 'Remove';
-    var $card = renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id);
+    var $card = renderCard(data.decks[deckNumber].collection[i].images.small, data.decks[deckNumber].collection[i].id, data.collection[deckNumber].name);
     $card.appendChild($removeButton);
     $newDeck.appendChild($card);
   }
@@ -614,7 +618,7 @@ function renderSetPage(page, totalPages) {
       tempData.data = tempData.data.concat(xhr.response.data);
       var $setsRow = document.querySelector('.sets');
       for (var i = 0; i < xhr.response.data.length; i++) {
-        $setsRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id));
+        $setsRow.appendChild(renderCard(xhr.response.data[i].images.small, xhr.response.data[i].id, xhr.response.data[i].name));
       }
       if (page < totalPages) {
         renderSetPage(page + 1, totalPages);

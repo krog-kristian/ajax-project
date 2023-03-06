@@ -71,6 +71,10 @@ p {
 
 /* secondary layouts */
 
+.radio-half {
+  width: 50%;
+}
+
 #nav-mobile {
   position: fixed;
   background-color: #031c67;
@@ -196,32 +200,21 @@ ul {
 }
 
 fieldset {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   border: none;
-  justify-content: space-around;
   background-color: #d9d9d9;
   border-radius: 0.5rem;
   margin-top: 1.5rem;
 }
 
-#mobile-decks fieldset {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0 0;
-  border: none;
-  background-color: #d9d9d9;
-  border-radius: 0.5rem;
-  padding: 0;
-}
-
 fieldset label {
   display: inline-block;
-  padding: 0 0.5rem;
+  padding: 0 0.75rem;
   font-size: 1.5rem;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 fieldset input {
@@ -571,10 +564,6 @@ a:hover {
 
   #decks-desktop {
     display: flex;
-  }
-
-  fieldset {
-    column-gap: 4.5rem;
   }
 
   fieldset label {
