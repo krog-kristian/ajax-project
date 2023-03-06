@@ -36,11 +36,17 @@ h2,
 h3 {
   text-align: center;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 
 h2 {
   margin: 0 2rem;
+  color: #ffd705;
+  text-shadow:
+    -0.1rem -0.1rem 0.2rem #031c67,
+    0.2rem -0.1rem 0.2rem #031c67,
+    -0.1rem 0.1rem 0.2rem #031c67,
+    0.1rem 0.1rem 0.2rem #031c67;
 }
 
 .column-full > h2 {
@@ -220,6 +226,16 @@ fieldset label {
 fieldset input {
   height: 1.2rem;
   width: 1.2rem;
+}
+
+legend {
+  text-align: center;
+  font-size: 1.5rem;
+  background-color: #031c67;
+  color: #ffd705;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
 [data-view="series"] label {
