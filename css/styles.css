@@ -36,21 +36,21 @@ h2,
 h3 {
   text-align: center;
   font-weight: 500;
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 
 h2 {
   margin: 0 2rem;
   color: #ffd705;
   text-shadow:
-    -0.1rem -0.1rem 0.2rem #031c67,
-    0.2rem -0.1rem 0.2rem #031c67,
-    -0.1rem 0.1rem 0.2rem #031c67,
-    0.1rem 0.1rem 0.2rem #031c67;
+    -0.1rem -0.1rem 0.3rem #031c67,
+    0.2rem -0.1rem 0.3rem #031c67,
+    -0.1rem 0.1rem 0.3rem #031c67,
+    0.1rem 0.1rem 0.3rem #031c67;
 }
 
 .column-full > h2 {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 h3 {
