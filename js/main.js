@@ -16,6 +16,14 @@ var types = [];
 var selectedDeck = 0;
 var deckToRender = 0;
 var $deckPage = document.querySelector('[data-view="decks"]');
+var $titleCount = document.querySelector('#set-title');
+var currentSet = '';
+var $setsPage = document.querySelector('[data-view="sets"]');
+var currentSetObject = {};
+var $seriesPage = document.querySelector('[data-view="series"]');
+var $seriesMenu = document.querySelector('#series');
+var series = [];
+var setObject = [];
 
 // Load and View Swapping
 
@@ -85,6 +93,8 @@ $navLinks.addEventListener('click', function () {
     $hamburger.classList.add('hidden');
   }
 });
+
+retrieveSets();
 
 // Search API and Render
 
@@ -518,8 +528,6 @@ function removeSingleDeckCard(cardID) {
 
 // Series and Sets
 
-var series = [];
-var setObject = [];
 function retrieveSets() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/sets');
@@ -535,7 +543,7 @@ function retrieveSets() {
   });
   xhr.send();
 }
-var $seriesMenu = document.querySelector('#series');
+
 function buildSeriesMenu() {
   for (var i = 0; i < series.length; i++) {
     var $seriesOption = document.createElement('option');
@@ -545,8 +553,6 @@ function buildSeriesMenu() {
   }
 }
 
-retrieveSets();
-var $seriesPage = document.querySelector('[data-view="series"]');
 $seriesMenu.addEventListener('change', function () {
   var $seriesRow = document.querySelector('.series');
   $seriesRow.remove();
@@ -574,7 +580,7 @@ $seriesMenu.addEventListener('change', function () {
   }
   $seriesPage.appendChild($newSeriesRow);
 });
-var currentSetObject = {};
+
 $seriesPage.addEventListener('click', function () {
   if (event.target.matches('.logo-button img')) {
     viewSwap('sets');
@@ -597,8 +603,6 @@ $seriesPage.addEventListener('click', function () {
     renderSetPage(1, totalPages);
   }
 });
-var currentSet = '';
-var $setsPage = document.querySelector('[data-view="sets"]');
 
 function renderTitle(setImage, setName) {
   var $setHeaderImage = document.querySelector('#set-logo img');
@@ -642,4 +646,3 @@ function countSet() {
     $titleCount.textContent = count + '/' + tempData.data.length;
   }
 }
-var $titleCount = document.querySelector('#set-title');
