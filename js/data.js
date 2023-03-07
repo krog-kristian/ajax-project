@@ -38,3 +38,8 @@ if (localStorage.getItem('tcg-tracker')) {
   var previousData = localStorage.getItem('tcg-tracker');
   data = JSON.parse(previousData);
 }
+
+document.addEventListener('visibilitychange', function (event) {
+  var dataJSON = JSON.stringify(data);
+  localStorage.setItem('tcg-tracker', dataJSON);
+});

@@ -646,3 +646,43 @@ function countSet() {
     $titleCount.textContent = count + '/' + tempData.data.length;
   }
 }
+
+// Card pop
+var $largeImage = document.querySelector('.large-card > img');
+var $cardPop = document.querySelector('.card-pop');
+function cardPop(card) {
+  $cardPop.classList.remove('hidden');
+  $largeImage.setAttribute('src', card.images.large);
+  $largeImage.setAttribute('alt', card.name);
+}
+
+function cardUnpop() {
+  $largeImage.setAttribute('src', '');
+  $largeImage.setAttribute('alt', '');
+  $cardPop.classList.add('hidden');
+}
+
+var $body = document.querySelector('body');
+
+$body.addEventListener('click', function () {
+  if (event.target.matches('.card-wrapper img')) {
+    var cardId = event.target.closest('.card-wrapper');
+    cardId = cardId.getAttribute('data-location');
+    if (event.target.matches('.sets img') || event.target.matches('[data-view="search-results"] img')) {
+      for (var i = 0; i < tempData.data.length; i++) {
+        if (cardId === tempData.data[i].id) {
+          cardPop(tempData.data[i]);
+        }
+      }
+    }
+    if (event.target.matches('#collection img') || event.target.matches('#deck-cards img')) {
+      for (var j = 0; j < data.collection.length; j++) {
+        if (cardId === data.collection[j].id) {
+          cardPop(data.collection[j]);
+        }
+      }
+    }
+  }
+});
+
+$largeImage.addEventListener('click', cardUnpop);
