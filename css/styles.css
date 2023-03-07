@@ -273,6 +273,19 @@ legend {
   justify-content: flex-end;
 }
 
+.card-pop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
 /* Icons and Images   */
 
 #set-logo {
@@ -285,6 +298,19 @@ legend {
 
 .logo-button > img {
   width: 100%;
+}
+
+.large-card {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 0;
+  flex-wrap: wrap;
+}
+
+.large-card > img {
+  width: 100%;
+  border-radius: 0.5rem;
 }
 
 .card-wrapper {
@@ -589,6 +615,10 @@ a:hover {
 
   #set-logo {
     width: 50%;
+  }
+
+  .large-card {
+    width: 30%;
   }
 }
 
