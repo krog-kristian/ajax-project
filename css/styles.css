@@ -365,6 +365,11 @@ legend {
 
 /* Buttons  */
 
+h1:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
 #hamburger {
   border: 0.1rem solid black;
   display: flex;
