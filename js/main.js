@@ -199,7 +199,7 @@ $searchAgain.addEventListener('click', function () {
 $searchPage.addEventListener('click', collectCard);
 
 function collectCard(event) {
-  if (event.target.matches('i') || event.target.matches('.desktop-collect')) {
+  if (event.target.matches('.mobile-collect i') || event.target.matches('.desktop-collect')) {
     var $collectedCard = event.target.closest('.card-wrapper');
     var cardID = $collectedCard.getAttribute('data-location');
     for (var i = 0; i < tempData.data.length; i++) {
