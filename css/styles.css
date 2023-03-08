@@ -121,6 +121,16 @@ input[type="text"] {
   height: 2rem;
 }
 
+.order-1 .search-main {
+  width: 65%;
+  padding-left: 0.3rem;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  border: 0.1rem solid black;
+  height: 2rem;
+  margin: 0 auto 0.5rem;
+}
+
 select {
   font-size: 1.2rem;
   padding-left: 0.3rem;
@@ -367,7 +377,7 @@ legend {
 
 h1:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 #hamburger {
@@ -420,7 +430,7 @@ h1:hover {
   border-radius: 0.25rem;
   font-size: 1.2rem;
   padding: 0.2rem 0.4rem;
-  margin: 0 0.2rem;
+  margin: 0 0 0 0.5rem;
 }
 
 .cancel {
