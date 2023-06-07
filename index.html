@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
-  <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,6 +15,12 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/site.webmanifest">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
   <header>
@@ -59,11 +64,13 @@
           your missing from a set!
         </p>
       </div>
-      <div class="column-half order-1">
+      <div class="column-half order-1 align-center-column">
         <h3 >Get Started</h3>
         <label for="search-main">Search for a card by name.</label>
-        <input type="text" class="search-main" placeholder="Charizard">
-        <button class="search" id="search-home">Search</button>
+        <div>
+          <input type="text" class="search-main" placeholder="Charizard">
+          <button class="search" id="search-home">Search</button>
+        </div>
         <div class="card-back">
           <img src="images/card-back.jpg" alt="The back of a pokemon card.">
         </div>
@@ -143,6 +150,11 @@
   </section>
 
   <section class="container hidden" data-view="decks">
+    <div class="row">
+      <div class="column-full">
+        <h2>Your Decks</h2>
+      </div>
+    </div>
 
     <div class="hidden" id="rename-deck">
       <div class="modal">
@@ -233,6 +245,11 @@
   </section>
 
   <section class="container hidden" data-view="series">
+    <div class="row">
+      <div class="column-full">
+        <h2>Card Series</h2>
+      </div>
+    </div>
     <div class="row">
       <div class="column-full">
         <div>

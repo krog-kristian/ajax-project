@@ -24,6 +24,8 @@ var $seriesPage = document.querySelector('[data-view="series"]');
 var $seriesMenu = document.querySelector('#series');
 var series = [];
 var setObject = [];
+var $desktopLogo = document.querySelector('#nav-desktop h1');
+var $mobileLogo = document.querySelector('#nav-mobile h1');
 
 // Load and View Swapping
 
@@ -67,6 +69,13 @@ function viewSwap(newView) {
     renderDeck(deckToRender);
   }
 }
+
+$desktopLogo.addEventListener('click', function () {
+  viewSwap('home');
+});
+$mobileLogo.addEventListener('click', function () {
+  viewSwap('home');
+});
 
 $hamburgerButton.addEventListener('click', function () {
   if ($hamburger.classList.contains('hidden')) {
